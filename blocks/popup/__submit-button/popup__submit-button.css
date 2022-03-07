@@ -19,3 +19,8 @@
 .popup__submit-button:hover {
   opacity: .8;
 }
+
+.popup__submit-button:focus {
+  opacity: .8;
+  outline-style: none;
+}

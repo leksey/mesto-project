@@ -14,13 +14,6 @@
 
 @font-face {
   font-family: 'Inter';
-  font-weight: 700;
-  src: url("inter/Inter-Bold.woff2?v=3.19") format("woff2"),
-       url("inter/Inter-Bold.woff?v=3.19") format("woff");
-}
-
-@font-face {
-  font-family: 'Inter';
   font-weight: 900;
   src: url("inter/Inter-Black.woff2?v=3.19") format("woff2"),
        url("inter/Inter-Black.woff?v=3.19") format("woff");
