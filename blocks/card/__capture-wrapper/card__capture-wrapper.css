@@ -1,0 +1,7 @@
+.card__capture-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 246px;
+  height: 43px;
+  padding: 25px 15px 31px 21px;
+}

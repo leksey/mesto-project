@@ -1,0 +1,8 @@
+.profile__picture {
+  display: block;
+  object-position: center;
+  object-fit: cover;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+}
