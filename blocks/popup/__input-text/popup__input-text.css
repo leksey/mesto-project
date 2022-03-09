@@ -21,6 +21,7 @@
 @media screen and (max-width: 640px) {
   .popup__input-text {
     height: 22px;
+    padding: 0 0 10px;
   }
   .popup__input-text:nth-last-of-type(2) {
     margin-bottom: 45px;

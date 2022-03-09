@@ -16,68 +16,68 @@
         <img src="images/profile-pic.jpg" alt="Фото профиля" class="profile__picture">
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <button class="profile__edit-button" aria-label="Редактировать"></button>
+          <button type="button" class="profile__edit-button" aria-label="Редактировать"></button>
           <p class="profile__caption">Исследователь океана</p>
         </div>
-        <button class="profile__add-button" aria-label="Добавить фото"></button>
+        <button type="button" class="profile__add-button" aria-label="Добавить фото"></button>
       </section>
-      <section class="places">
-        <div class="card">
+      <ul class="places">
+        <li class="card">
           <img src="images/kirill-pershin-01-unsplash.jpg" alt="Фото" class="card__picture">
           <div class="card__capture-wrapper">
             <h2 class="card__capture">Карачаевск</h2>
-            <button class="card__like-button card__like-button_status_active" aria-label="Лайк"></button>
+            <button type="button" class="card__like-button card__like-button_status_active" aria-label="Лайк"></button>
           </div>
-        </div>
-        <div class="card">
+        </li>
+        <li class="card">
           <img src="images/kirill-pershin-02-unsplash.jpg" alt="Фото" class="card__picture">
           <div class="card__capture-wrapper">
             <h2 class="card__capture">Гора Эльбрус</h2>
-            <button class="card__like-button" aria-label="Лайк"></button>
+            <button type="button" class="card__like-button" aria-label="Лайк"></button>
           </div>
-        </div>
-        <div class="card">
+        </li>
+        <li class="card">
           <img src="images/kirill-pershin-03-unsplash.jpg" alt="Фото" class="card__picture">
           <div class="card__capture-wrapper">
             <h2 class="card__capture">Домбай</h2>
-            <button class="card__like-button" aria-label="Лайк"></button>
+            <button type="button" class="card__like-button" aria-label="Лайк"></button>
           </div>
-        </div>
-        <div class="card">
+        </li>
+        <li class="card">
           <img src="images/kirill-pershin-02-unsplash.jpg" alt="Фото" class="card__picture">
           <div class="card__capture-wrapper">
             <h2 class="card__capture">Гора Эльбрус</h2>
-            <button class="card__like-button" aria-label="Лайк"></button>
+            <button type="button" class="card__like-button" aria-label="Лайк"></button>
           </div>
-        </div>
-        <div class="card">
+        </li>
+        <li class="card">
           <img src="images/kirill-pershin-03-unsplash.jpg" alt="Фото" class="card__picture">
           <div class="card__capture-wrapper">
             <h2 class="card__capture">Домбай</h2>
-            <button class="card__like-button" aria-label="Лайк"></button>
+            <button type="button" class="card__like-button" aria-label="Лайк"></button>
           </div>
-        </div>
-        <div class="card">
+        </li>
+        <li class="card">
           <img src="images/kirill-pershin-01-unsplash.jpg" alt="Фото" class="card__picture">
           <div class="card__capture-wrapper">
             <h2 class="card__capture">Карачаево-Черкессия</h2>
-            <button class="card__like-button" aria-label="Лайк"></button>
+            <button type="button" class="card__like-button" aria-label="Лайк"></button>
           </div>
-        </div>
-      </section>
+        </li>
+      </ul>
     </main>
     <footer class="footer">
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
   </div>
   <div class="popup">
-    <button class="popup__close-button" aria-label="Закрыть"></button>
-    <div class="popup__container">
+    <button type="button" class="popup__close-button" aria-label="Закрыть"></button>
+    <form class="popup__container">
       <h2 class="popup__title">Редактировать профиль</h2>
       <input type="text" id="heading" name="heading" class="popup__input-text popup__input-text_field_name" value="Жак-Ив Кусто" required>
       <input type="text" id="subheading" name="subheading" class="popup__input-text popup__input-text_field_capture" value="Исследователь океана" required>
       <input type="submit" class="popup__submit-button" value="Сохранить">
-    </div>
+    </form>
   </div>
 </body>
 </html>
