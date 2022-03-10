@@ -1,4 +1,4 @@
-.popup__submit-button {
+.profile-edit-form__submit-button {
   width: 100%;
   height: 50px;
   border: 0;
@@ -16,11 +16,11 @@
   transition: opacity 1s linear;
 }
 
-.popup__submit-button:hover {
+.profile-edit-form__submit-button:hover {
   opacity: .8;
 }
 
-.popup__submit-button:focus {
+.profile-edit-form__submit-button:focus {
   opacity: .8;
   outline-style: none;
 }
