@@ -22,64 +22,51 @@
         <button type="button" class="profile__add-button" aria-label="Добавить фото"></button>
       </section>
       <ul class="places">
-        <li class="card">
-          <img src="images/kirill-pershin-01-unsplash.jpg" alt="Фото" class="card__picture">
-          <div class="card__capture-wrapper">
-            <h2 class="card__capture">Карачаевск</h2>
-            <button type="button" class="card__like-button card__like-button_status_active" aria-label="Лайк"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img src="images/kirill-pershin-02-unsplash.jpg" alt="Фото" class="card__picture">
-          <div class="card__capture-wrapper">
-            <h2 class="card__capture">Гора Эльбрус</h2>
-            <button type="button" class="card__like-button" aria-label="Лайк"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img src="images/kirill-pershin-03-unsplash.jpg" alt="Фото" class="card__picture">
-          <div class="card__capture-wrapper">
-            <h2 class="card__capture">Домбай</h2>
-            <button type="button" class="card__like-button" aria-label="Лайк"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img src="images/kirill-pershin-02-unsplash.jpg" alt="Фото" class="card__picture">
-          <div class="card__capture-wrapper">
-            <h2 class="card__capture">Гора Эльбрус</h2>
-            <button type="button" class="card__like-button" aria-label="Лайк"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img src="images/kirill-pershin-03-unsplash.jpg" alt="Фото" class="card__picture">
-          <div class="card__capture-wrapper">
-            <h2 class="card__capture">Домбай</h2>
-            <button type="button" class="card__like-button" aria-label="Лайк"></button>
-          </div>
-        </li>
-        <li class="card">
-          <img src="images/kirill-pershin-01-unsplash.jpg" alt="Фото" class="card__picture">
-          <div class="card__capture-wrapper">
-            <h2 class="card__capture">Карачаево-Черкессия</h2>
-            <button type="button" class="card__like-button" aria-label="Лайк"></button>
-          </div>
-        </li>
       </ul>
     </main>
     <footer class="footer">
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
   </div>
-  <div class="popup">
+  <div class="popup popup_profile">
     <button type="button" class="popup__close-button" aria-label="Закрыть"></button>
     <div class="popup__container">
       <form class="profile-edit-form">
         <h2 class="profile-edit-form__title">Редактировать профиль</h2>
-        <input type="text" id="heading" name="heading" class="profile-edit-form__input-text profile-edit-form__input-text_field_name" value="Жак-Ив Кусто" required>
-        <input type="text" id="subheading" name="subheading" class="profile-edit-form__input-text profile-edit-form__input-text_field_capture" value="Исследователь океана" required>
+        <input type="text" id="heading" name="heading" class="profile-edit-form__input-text profile-edit-form__input-text_field_name" value="" required>
+        <input type="text" id="subheading" name="subheading" class="profile-edit-form__input-text profile-edit-form__input-text_field_caption" value="" required>
         <input type="submit" class="profile-edit-form__submit-button" value="Сохранить">
       </form>
     </div>
   </div>
+  <div class="popup popup_add">
+    <button type="button" class="popup__close-button" aria-label="Закрыть"></button>
+    <div class="popup__container">
+      <form class="profile-edit-form">
+        <h2 class="profile-edit-form__title">Новое место</h2>
+        <input type="text" id="heading" name="heading" class="profile-edit-form__input-text profile-edit-form__input-text_field_name" placeholder="Название" value="" required>
+        <input type="text" id="subheading" name="subheading" class="profile-edit-form__input-text profile-edit-form__input-text_field_caption" placeholder="Ссылка на картинку" value="" required>
+        <input type="submit" class="profile-edit-form__submit-button" value="Сохранить">
+      </form>
+    </div>
+  </div>
+  <div class="popup popup_pic">
+    <div class="popup__container popup__container_pic">
+      <button type="button" class="popup__close-button popup__close-button_pic" aria-label="Закрыть"></button>
+      <img src="" alt="" class="popup__img">
+      <h2 class="popup__capture"></h2>
+    </div>
+  </div>
+  <template id="card-template">
+    <li class="card">
+      <img src="" alt="Фото" class="card__picture">
+      <button type="button" class="card__delete-button" aria-label="Удалить"></button>
+      <div class="card__capture-wrapper">
+        <h2 class="card__capture"></h2>
+        <button type="button" class="card__like-button" aria-label="Лайк"></button>
+      </div>
+    </li>
+  </template>
+  <script src='script.js'></script>
 </body>
 </html>

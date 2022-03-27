@@ -1,0 +1,3 @@
+.popup__fade-transition {
+  transition: visibility .3s linear, opacity .3s linear;
+}
