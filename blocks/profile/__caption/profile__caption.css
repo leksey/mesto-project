@@ -5,6 +5,7 @@
   font-size: 18px;
   line-height: 22px;
   display: block;
+  min-width: 60%;
   max-width: 282px;
   margin: 0;
   padding: 16px 0 0 0;
