@@ -8,10 +8,10 @@ const popUpAdd = document.querySelector('.popup_add');
 const popUpPic = document.querySelector('.popup_pic');
 
 //forms
-const profileForm = popUpProfile.querySelector('.profile-edit-form');
-const addForm = popUpAdd.querySelector('.profile-edit-form');
-const profileFormName = document.querySelector('.profile-edit-form__input-text_field_name');
-const profileFormCaption = document.querySelector('.profile-edit-form__input-text_field_caption');
+const profileForm = popUpProfile.querySelector('.form');
+const addForm = popUpAdd.querySelector('.form');
+const profileFormName = document.querySelector('.form__input-text_field_name');
+const profileFormCaption = document.querySelector('.form__input-text_field_caption');
 
 //cards and where they should be placed
 const placesContainer = document.querySelector('.places');
@@ -104,8 +104,8 @@ function renderCard (cardData) {
 function newCardAdd (evt) {
   evt.preventDefault();
   const newCard = {};
-  newCard.name = popUpAdd.querySelector('.profile-edit-form__input-text_field_name').value;
-  newCard.link = popUpAdd.querySelector('.profile-edit-form__input-text_field_caption').value;
+  newCard.name = popUpAdd.querySelector('.form__input-text_field_caption').value;
+  newCard.link = popUpAdd.querySelector('.form__input-text_field_link').value;
   renderCard(newCard);
   popUpAdd.classList.remove('popup_opened');
 }
