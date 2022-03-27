@@ -47,26 +47,8 @@ const initialCards = [
   }
 ];
 
-//page logic
-initialCards.reverse().forEach(item => renderCard(item));
-
-//profile buttons logic
-profileEditButton.addEventListener('click', function () {
-  popUpHandle(popUpProfile);
-  profileFormName.value = profileName.textContent;
-  profileFormCaption.value = profileCaption.textContent;
-});
-
-addButton.addEventListener('click', function () {
-  popUpHandle(popUpAdd);
-});
-
-//forms logic
-profileForm.addEventListener('submit', formSubmitHandle);
-addForm.addEventListener('submit', newCardAdd);
-
 //functions
-function popUpHandle(popUpElement) {
+function handlePopUp(popUpElement) {
   const popUpCloseButton = popUpElement.querySelector('.popup__close-button');
   if(!popUpElement.classList.contains('popup__fade-transition')) {
     popUpElement.classList.add('popup__fade-transition');
@@ -94,14 +76,14 @@ function renderCard (cardData) {
 
   const pic = cardElement.querySelector('.card__picture');
   pic.addEventListener('click', function(evt) {
-    popUpHandle(popUpPic);
+    handlePopUp(popUpPic);
     popUpPic.querySelector('.popup__img').src = evt.target.src;
     popUpPic.querySelector('.popup__capture').textContent = evt.target.parentNode.querySelector('.card__capture').textContent;
   });
   placesContainer.prepend(cardElement);
 }
 
-function newCardAdd (evt) {
+function addNewCard (evt) {
   evt.preventDefault();
   const newCard = {};
   newCard.name = popUpAdd.querySelector('.form__input-text_field_caption').value;
@@ -110,9 +92,27 @@ function newCardAdd (evt) {
   popUpAdd.classList.remove('popup_opened');
 }
 
-function formSubmitHandle (evt) {
+function submitProfileForm (evt) {
   evt.preventDefault();
   profileName.textContent = profileFormName.value;
   profileCaption.textContent = profileFormCaption.value;
   popUpProfile.classList.remove('popup_opened');
 }
+
+//page logic
+initialCards.reverse().forEach(item => renderCard(item));
+
+//profile buttons logic
+profileEditButton.addEventListener('click', function () {
+  handlePopUp(popUpProfile);
+  profileFormName.value = profileName.textContent;
+  profileFormCaption.value = profileCaption.textContent;
+});
+
+addButton.addEventListener('click', function () {
+  handlePopUp(popUpAdd);
+});
+
+//forms logic
+profileForm.addEventListener('submit', submitProfileForm);
+addForm.addEventListener('submit', addNewCard);
