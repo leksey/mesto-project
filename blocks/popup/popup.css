@@ -1,5 +1,6 @@
 .popup {
   visibility: hidden;
+  cursor: pointer;
   display: grid;
   justify-items: center;
   align-items: center;

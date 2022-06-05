@@ -7,7 +7,7 @@
   height: 32px;
   cursor: pointer;
   position: absolute;
-  margin: 0 0 calc(8px + 330px + 32px) calc(8px + 430px + 32px);
+  margin: 0 0 calc(8px + 351px + 32px) calc(8px + 430px + 32px);
   transition: opacity 1s linear;
 }
 
