@@ -11,14 +11,6 @@ const popupCloseButtons = document.querySelectorAll('.popup__close-button');
 const profileForm = popupProfile.querySelector('.form');
 const addForm = popupAdd.querySelector('.form');
 
-const validationElements = {
-  formSelector: '.form',
-  inputSelector: '.form__input-text',
-  submitButtonSelector: '.form__submit-button',
-  inactiveButtonClass: 'form__submit-button_status_inactive',
-  inputErrorClass: 'form__input-text_status_error',
-};
-
 initialCards.reverse().forEach(item => addCardOnPage(renderCard(item)));
 
 profileEditButton.addEventListener('click', handleEditProfilePopup);
