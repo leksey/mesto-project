@@ -4,16 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Место: Жак-Ив Кусто</title>
-  <link rel="stylesheet" href="pages/index.css">
 </head>
 <body>
   <div class="page">
     <header class="header">
-      <img src="images/logo-white.svg" alt="Место Россия" class="header__logo">
+      <img src="<%=require('./images/logo-white.svg')%>" alt="Место Россия" class="header__logo">
     </header>
     <main class="content">
       <section class="profile">
-        <img src="images/profile-pic.jpg" alt="Фото профиля" class="profile__picture">
+        <img src="<%=require('./images/profile-pic.jpg')%>" alt="Фото профиля" class="profile__picture">
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <button type="button" class="profile__edit-button" aria-label="Редактировать"></button>
@@ -71,7 +70,5 @@
       </div>
     </li>
   </template>
-  <script src='cards.js'></script>
-  <script src='script.js'></script>
 </body>
 </html>
