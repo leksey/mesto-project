@@ -1,35 +1,33 @@
-import {openPopup, closePopup, popupProfile, popupAdd} from './utils.js';
-import {enableValidation} from './validate.js'
+const popupProfile = document.querySelector('.popup_profile');
+const popups = document.querySelectorAll('.popup');
 
-const profileFormName = document.querySelector('.form__input-text_field_name');
-const profileFormCaption = document.querySelector('.form__input-text_field_caption');
-const profileName = document.querySelector('.profile__name');
-const profileCaption = document.querySelector('.profile__caption');
-const validationElements = {
-  formSelector: '.form',
-  inputSelector: '.form__input-text',
-  submitButtonSelector: '.form__submit-button',
-  inactiveButtonClass: 'form__submit-button_status_inactive',
-  inputErrorClass: 'form__input-text_status_error',
-};
 
-function handleEditProfilePopup () {
-  openPopup(popupProfile);
-  profileFormName.value = profileName.textContent;
-  profileFormCaption.value = profileCaption.textContent;
-  enableValidation(validationElements);
+function openPopup(popupElement) {
+  if(!popupElement.classList.contains('popup__fade-transition')) {
+    popupElement.classList.add('popup__fade-transition');
+  }
+  popupElement.classList.add('popup_opened');
+  window.addEventListener('keydown', handleEsc);
+  document.addEventListener('click', handleOverlayClick);
 }
 
-function handleAddPopup () {
-  openPopup(popupAdd);
-  enableValidation(validationElements);
+function closePopup (popupElement) {
+  popupElement.classList.remove('popup_opened');
+  window.removeEventListener('keydown', handleEsc);
+  document.removeEventListener('click', handleOverlayClick);
 }
 
-function submitProfileForm (evt) {
-  evt.preventDefault();
-  profileName.textContent = profileFormName.value;
-  profileCaption.textContent = profileFormCaption.value;
-  closePopup(popupProfile);
+function handleEsc(evt) {
+  const openedPopup = document.querySelector('.popup_opened');
+  if (evt.key === 'Escape' || openedPopup != null) {
+    closePopup(openedPopup);
+  }
 }
 
-export {handleEditProfilePopup, handleAddPopup, submitProfileForm};
+function handleOverlayClick(evt) {
+  if (evt.target.classList.contains('popup')) {
+    closePopup(evt.target);
+  }
+}
+
+export {openPopup, closePopup, popupProfile};

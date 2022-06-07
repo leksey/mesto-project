@@ -1,38 +1,9 @@
-import {closePopup, openPopup, popupAdd} from './utils.js';
-
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
+import {openPopup} from './modal.js'
 
 const cardTemplate = document.querySelector('#card-template').content;
 const popupPic = document.querySelector('.popup_pic');
 const popupPicImg = popupPic.querySelector('.popup__img');
 const popupPicCapture = popupPic.querySelector('.popup__capture');
-const pictureFormCaption = popupAdd.querySelector('.form__input-text_field_caption');
-const pictureFormLink = popupAdd.querySelector('.form__input-text_field_link');
 const placesContainer = document.querySelector('.places');
 
 function renderCard (cardData) {
@@ -65,14 +36,4 @@ function addCardOnPage (card) {
   placesContainer.prepend(card);
 }
 
-function addNewCard (evt) {
-  evt.preventDefault();
-  const newCard = {};
-  newCard.name = pictureFormCaption.value;
-  newCard.link = pictureFormLink.value;
-  addCardOnPage(renderCard(newCard));
-  closePopup(popupAdd);
-  addForm.reset();
-}
-
-export {initialCards, renderCard, addNewCard, addCardOnPage};
+export {renderCard, addCardOnPage};

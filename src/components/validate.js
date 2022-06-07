@@ -1,3 +1,5 @@
+import {disableButton} from './utils.js';
+
 const showInputError = (formElement, inputElement, errorMessage, validationElements) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-input-error`);
   inputElement.classList.add(validationElements.inputErrorClass);
@@ -14,7 +16,7 @@ const toggleButtonState = (inputList, buttonElement, validationElements) => {
   inputList.forEach(i => {
   });
   if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add(validationElements.inactiveButtonClass);
+    disableButton(buttonElement, validationElements.inactiveButtonClass);
   } else {
     buttonElement.classList.remove(validationElements.inactiveButtonClass);
   }
@@ -37,8 +39,8 @@ const checkInputValidity = (formElement, inputElement, validationElements) => {
 const setEventListeners = (formElement, validationElements) => {
   const inputList = Array.from(formElement.querySelectorAll(validationElements.inputSelector));
   const buttonElement = formElement.querySelector(validationElements.submitButtonSelector);
+  toggleButtonState(inputList, buttonElement, validationElements);
   inputList.forEach((inputElement) => {
-    toggleButtonState(inputList, buttonElement, validationElements);
     inputElement.addEventListener('input', function () {
       checkInputValidity(formElement, inputElement, validationElements);
       toggleButtonState(inputList, buttonElement, validationElements);
