@@ -36,18 +36,18 @@ const addButton = document.querySelector('.profile__add-button');
 
 const popupCloseButtons = document.querySelectorAll('.popup__close-button');
 
-const profileForm = popupProfile.querySelector('.form');
-
 const popupAdd = document.querySelector('.popup_add');
 const addForm = popupAdd.querySelector('.form');
 const addFormButton = addForm.querySelector('.form__submit-button');
 
-const profileFormName = document.querySelector('.form__input-text_field_name');
-const profileFormCaption = document.querySelector('.form__input-text_field_caption');
+const profileForm = popupProfile.querySelector('.form');
+const profileFormButton = profileForm.querySelector('.form__submit-button');
+const profileFormName = profileForm.querySelector('.form__input-text_field_name');
+const profileFormCaption = profileForm.querySelector('.form__input-text_field_caption');
 const profileName = document.querySelector('.profile__name');
 const profileCaption = document.querySelector('.profile__caption');
-const pictureFormCaption = popupAdd.querySelector('.form__input-text_field_caption');
-const pictureFormLink = popupAdd.querySelector('.form__input-text_field_link');
+const pictureFormCaption = addForm.querySelector('.form__input-text_field_caption');
+const pictureFormLink = addForm.querySelector('.form__input-text_field_link');
 
 
 
@@ -74,6 +74,7 @@ function submitProfileForm (evt) {
   profileName.textContent = profileFormName.value;
   profileCaption.textContent = profileFormCaption.value;
   closePopup(popupProfile);
+  disableButton(profileFormButton, validationElements.inactiveButtonClass);
 }
 
 function addNewCard (evt) {

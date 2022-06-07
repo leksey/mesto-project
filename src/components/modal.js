@@ -19,7 +19,7 @@ function closePopup (popupElement) {
 
 function handleEsc(evt) {
   const openedPopup = document.querySelector('.popup_opened');
-  if (evt.key === 'Escape' || openedPopup != null) {
+  if (evt.key === 'Escape' && openedPopup != null) {
     closePopup(openedPopup);
   }
 }
