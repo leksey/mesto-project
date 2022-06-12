@@ -1,7 +1,3 @@
-const popupProfile = document.querySelector('.popup_profile');
-const popups = document.querySelectorAll('.popup');
-
-
 function openPopup(popupElement) {
   if(!popupElement.classList.contains('popup__fade-transition')) {
     popupElement.classList.add('popup__fade-transition');
@@ -30,4 +26,4 @@ function handleOverlayClick(evt) {
   }
 }
 
-export {openPopup, closePopup, popupProfile};
+export {openPopup, closePopup};

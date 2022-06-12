@@ -1,38 +1,13 @@
 import './pages/index.css';
-import {openPopup, closePopup, popupProfile} from './components/modal.js';
+import {openPopup, closePopup} from './components/modal.js';
 import {renderCard, addCardOnPage} from './components/cards.js';
 import {enableValidation} from './components/validate.js';
 import {disableButton} from './components/utils.js';
-
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
+import {getInitialCards, getProfileData, editProfile, publishCard, editAvatar} from './components/api.js'
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
+const profilePictureButton = document.querySelector('.profile__picture-button');
 
 const popupCloseButtons = document.querySelectorAll('.popup__close-button');
 
@@ -40,15 +15,23 @@ const popupAdd = document.querySelector('.popup_add');
 const addForm = popupAdd.querySelector('.form');
 const addFormButton = addForm.querySelector('.form__submit-button');
 
+const popupProfile = document.querySelector('.popup_profile');
 const profileForm = popupProfile.querySelector('.form');
 const profileFormButton = profileForm.querySelector('.form__submit-button');
 const profileFormName = profileForm.querySelector('.form__input-text_field_name');
 const profileFormCaption = profileForm.querySelector('.form__input-text_field_caption');
 const profileName = document.querySelector('.profile__name');
 const profileCaption = document.querySelector('.profile__caption');
+const profilePic = document.querySelector('.profile__picture');
 const pictureFormCaption = addForm.querySelector('.form__input-text_field_caption');
 const pictureFormLink = addForm.querySelector('.form__input-text_field_link');
 
+const popupProfilePic = document.querySelector('.popup_profile-picture');
+const profilePictureForm = popupProfilePic.querySelector('.form');
+const profilePictureFormButton = profilePictureForm.querySelector('.form__submit-button');
+const profilePictureInput = profilePictureForm.querySelector('.form__input-text_field_link');
+
+const profileData = {};
 
 
 const validationElements = {
@@ -61,8 +44,13 @@ const validationElements = {
 
 function handleEditProfilePopup () {
   openPopup(popupProfile);
-  profileFormName.value = profileName.textContent;
-  profileFormCaption.value = profileCaption.textContent;
+  profileFormName.value = profileData.name;
+  profileFormCaption.value = profileData.about;
+}
+
+function handleEditProfilePicturePopup () {
+  openPopup(popupProfilePic);
+  profilePictureInput.value = profileData.avatar;
 }
 
 function handleAddPopup () {
@@ -70,28 +58,53 @@ function handleAddPopup () {
 }
 
 function submitProfileForm (evt) {
+  changeSubmitButtonText(profileFormButton, 'Сохранение...');
   evt.preventDefault();
-  profileName.textContent = profileFormName.value;
-  profileCaption.textContent = profileFormCaption.value;
-  closePopup(popupProfile);
-  disableButton(profileFormButton, validationElements.inactiveButtonClass);
+  editProfile(profileFormName.value, profileFormCaption.value)
+  .then((data) => {
+    setProfileData(data);
+    renderProfile(data);
+    closePopup(popupProfile);
+    disableButton(profileFormButton, validationElements.inactiveButtonClass);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 }
 
 function addNewCard (evt) {
+  changeSubmitButtonText(addFormButton, 'Сохранение...');
   evt.preventDefault();
-  const newCard = {};
-  newCard.name = pictureFormCaption.value;
-  newCard.link = pictureFormLink.value;
-  addCardOnPage(renderCard(newCard));
-  closePopup(popupAdd);
-  addForm.reset();
-  disableButton(addFormButton, validationElements.inactiveButtonClass);
+  publishCard(pictureFormCaption.value, pictureFormLink.value)
+  .then((data) => {
+    addCardOnPage(renderCard(data, profileData.id))
+    closePopup(popupAdd);
+    addForm.reset();
+    disableButton(addFormButton, validationElements.inactiveButtonClass);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 }
 
-initialCards.reverse().forEach(item => addCardOnPage(renderCard(item)));
+function submitProfilePictureForm (evt) {
+  changeSubmitButtonText(profilePictureFormButton, 'Сохранение...');
+  evt.preventDefault();
+  editAvatar(profilePictureInput.value)
+  .then((data) => {
+    setProfileData(data);
+    renderProfile(data);
+    closePopup(popupProfilePic);
+    disableButton(profilePictureFormButton, validationElements.inactiveButtonClass);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+}
 
 profileEditButton.addEventListener('click', handleEditProfilePopup);
 addButton.addEventListener('click', handleAddPopup);
+profilePictureButton.addEventListener('click', handleEditProfilePicturePopup);
 
 popupCloseButtons.forEach(closeButton => {
   closeButton.addEventListener('click', function() {
@@ -102,5 +115,40 @@ popupCloseButtons.forEach(closeButton => {
 
 profileForm.addEventListener('submit', submitProfileForm);
 addForm.addEventListener('submit', addNewCard);
+profilePictureForm.addEventListener('submit', submitProfilePictureForm);
 
 enableValidation(validationElements);
+
+getProfileData()
+.then((data) => {
+  setProfileData(data);
+  renderProfile(profileData);
+  getInitialCards()
+  .then((data) => {
+    data.reverse().forEach(item => addCardOnPage(renderCard(item, profileData.id)));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+})
+  .catch((err) => {
+    console.log(err);
+});
+
+function renderProfile (profileData) {
+  profileName.textContent = profileData.name;
+  profileCaption.textContent = profileData.about;
+  profilePic.src = profileData.avatar;
+}
+
+function setProfileData (data) {
+  profileData.name = data.name;
+  profileData.about = data.about;
+  profileData.avatar = data.avatar;
+  profileData.id = data._id;
+}
+
+function changeSubmitButtonText (buttonElement, text) {
+  buttonElement.value = text;
+}
+

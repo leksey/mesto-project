@@ -5,7 +5,10 @@
 @import url(../blocks/header/__logo/header__logo.css);
 @import url(../blocks/content/content.css);
 @import url(../blocks/profile/profile.css);
+@import url(../blocks/profile/__picture-button/profile__picture-button.css);
 @import url(../blocks/profile/__picture/profile__picture.css);
+@import url(../blocks/profile/__picture-overlay/profile__picture-overlay.css);
+@import url(../blocks/profile/__picture-edit/profile__picture-edit.css);
 @import url(../blocks/profile/__info/profile__info.css);
 @import url(../blocks/profile/__name/profile__name.css);
 @import url(../blocks/profile/__caption/profile__caption.css);
@@ -16,9 +19,12 @@
 @import url(../blocks/card/__picture/card__picture.css);
 @import url(../blocks/card/__capture-wrapper/card__capture-wrapper.css);
 @import url(../blocks/card/__capture/card__capture.css);
+@import url(../blocks/card/__like-wrapper/card__like-wrapper.css);
 @import url(../blocks/card/__like-button/card__like-button.css);
 @import url(../blocks/card/__like-button/_status/card__like-button_status_active.css);
+@import url(../blocks/card/__like-counter/card__like-counter.css);
 @import url(../blocks/card/__delete-button/card__delete-button.css);
+@import url(../blocks/card/__delete-button/_status/card__delete-button_status_hidden.css);
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
 @import url(../blocks/popup/popup.css);
@@ -27,8 +33,9 @@
 @import url(../blocks/popup/__fade-transition/popup__fade-transition.css);
 @import url(../blocks/popup/__close-button/popup__close-button.css);
 @import url(../blocks/popup/__close-button/_pic/popup__close-button_pic.css);
+@import url(../blocks/popup/__close-button/_profile-picture/popup__close-button_profile-picture.css);
 @import url(../blocks/popup/__container/popup__container.css);
-@import url(../blocks/popup/__container/_pic/popup__container_pic.css);
+@import url(../blocks/popup/__container-pic/popup__container-pic.css);
 @import url(../blocks/popup/__img/popup__img.css);
 @import url(../blocks/popup/__capture/popup__capture.css);
 @import url(../blocks/form/__title/form__title.css);

@@ -1,0 +1,12 @@
+.profile__picture-edit {
+  object-position: center;
+  object-fit: fill;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: none;
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  position: absolute;
+}

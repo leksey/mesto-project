@@ -1,6 +1,6 @@
 .popup__container {
   cursor: default;
-  max-width: 430px;
+  width: 430px;
   background-color: #fff;
   border-radius: 10px;
   padding: 34px 36px 37px;
@@ -12,7 +12,7 @@
 
 @media screen and (max-width: 640px) {
   .popup__container {
-    max-width: 282px;
+    width: 282px;
     padding: 25px 22px 25px;
   }
 }

@@ -1,0 +1,9 @@
+.popup__close-button_profile-picture {
+  margin: 0 0 calc(8px + 275px + 32px) calc(8px + 430px + 32px);
+}
+
+@media screen and (max-width: 640px) {
+  .popup__close-button_profile-picture {
+    margin: 0 0 calc(16px + 255px + 20px) calc(282px - 20px);
+  }
+}
