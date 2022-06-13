@@ -1,5 +1,3 @@
-import {disableButton} from './utils.js';
-
 const showInputError = (formElement, inputElement, errorMessage, validationElements) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-input-error`);
   inputElement.classList.add(validationElements.inputErrorClass);
@@ -19,6 +17,7 @@ const toggleButtonState = (inputList, buttonElement, validationElements) => {
     disableButton(buttonElement, validationElements.inactiveButtonClass);
   } else {
     buttonElement.classList.remove(validationElements.inactiveButtonClass);
+    buttonElement.disabled = false;
   }
 }
 
@@ -58,4 +57,9 @@ const enableValidation = (validationElements) => {
   });
 };
 
-export {enableValidation};
+function disableButton (button, classToAdd) {
+  button.classList.add(classToAdd);
+  button.disabled = true;
+}
+
+export {enableValidation, disableButton};

@@ -11,7 +11,7 @@ const getInitialCards = () => {
     headers: config.headers
   })
     .then(res => {
-      return responseHandler(res);
+      return handleResponse(res);
     });
 };
 
@@ -20,7 +20,7 @@ const getProfileData = () => {
     headers: config.headers
   })
     .then(res => {
-      return responseHandler(res);
+      return handleResponse(res);
     });
 };
 
@@ -34,7 +34,7 @@ const editProfile = (name, about) => {
     })
   })
     .then(res => {
-      return responseHandler(res);
+      return handleResponse(res);
     });
 }
 
@@ -49,7 +49,7 @@ const publishCard = (name, link) => {
     })
   })
     .then(res => {
-      return responseHandler(res);
+      return handleResponse(res);
     });
 }
 
@@ -59,7 +59,7 @@ const deleteCard = (id) => {
     headers: config.headers
   })
     .then(res => {
-      return responseHandler(res);
+      return handleResponse(res);
     });
 }
 
@@ -69,7 +69,7 @@ const likeCard = (action, id) => {
     headers: config.headers
   })
     .then(res => {
-      return responseHandler(res);
+      return handleResponse(res);
     });
 }
 
@@ -82,11 +82,11 @@ const editAvatar = (link) => {
     })
   })
     .then(res => {
-      return responseHandler(res);
+      return handleResponse(res);
     });
 }
 
-function responseHandler (res) {
+function handleResponse (res) {
   if (res.ok) {
     return res.json();
   }

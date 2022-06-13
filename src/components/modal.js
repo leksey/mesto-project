@@ -1,7 +1,4 @@
 function openPopup(popupElement) {
-  if(!popupElement.classList.contains('popup__fade-transition')) {
-    popupElement.classList.add('popup__fade-transition');
-  }
   popupElement.classList.add('popup_opened');
   window.addEventListener('keydown', handleEsc);
   document.addEventListener('click', handleOverlayClick);

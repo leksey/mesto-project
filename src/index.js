@@ -1,8 +1,7 @@
 import './pages/index.css';
 import {openPopup, closePopup} from './components/modal.js';
 import {renderCard, addCardOnPage} from './components/cards.js';
-import {enableValidation} from './components/validate.js';
-import {disableButton} from './components/utils.js';
+import {enableValidation, disableButton} from './components/validate.js';
 import {getInitialCards, getProfileData, editProfile, publishCard, editAvatar} from './components/api.js'
 
 const profileEditButton = document.querySelector('.profile__edit-button');
@@ -50,7 +49,6 @@ function handleEditProfilePopup () {
 
 function handleEditProfilePicturePopup () {
   openPopup(popupProfilePic);
-  profilePictureInput.value = profileData.avatar;
 }
 
 function handleAddPopup () {
@@ -69,6 +67,9 @@ function submitProfileForm (evt) {
   })
   .catch((err) => {
     console.log(err);
+  })
+  .finally(function () {
+    changeSubmitButtonText(profileFormButton, 'Сохраненить');
   });
 }
 
@@ -84,6 +85,9 @@ function addNewCard (evt) {
   })
   .catch((err) => {
     console.log(err);
+  })
+  .finally(function () {
+    changeSubmitButtonText(addFormButton, 'Сохраненить');
   });
 }
 
@@ -99,6 +103,9 @@ function submitProfilePictureForm (evt) {
   })
   .catch((err) => {
     console.log(err);
+  })
+  .finally(function () {
+    changeSubmitButtonText(profilePictureFormButton, 'Сохраненить');
   });
 }
 
@@ -107,10 +114,8 @@ addButton.addEventListener('click', handleAddPopup);
 profilePictureButton.addEventListener('click', handleEditProfilePicturePopup);
 
 popupCloseButtons.forEach(closeButton => {
-  closeButton.addEventListener('click', function() {
-    const popup = closeButton.closest('.popup_opened');
-    closePopup(popup);
-  });
+  const popup = closeButton.closest('.popup');
+  closeButton.addEventListener('click',() => closePopup(popup));
 });
 
 profileForm.addEventListener('submit', submitProfileForm);

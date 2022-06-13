@@ -30,7 +30,6 @@
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/_pic/popup_pic.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
-@import url(../blocks/popup/__fade-transition/popup__fade-transition.css);
 @import url(../blocks/popup/__close-button/popup__close-button.css);
 @import url(../blocks/popup/__close-button/_pic/popup__close-button_pic.css);
 @import url(../blocks/popup/__close-button/_profile-picture/popup__close-button_profile-picture.css);

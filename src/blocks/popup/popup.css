@@ -11,4 +11,5 @@
   right: 0;
   background-color: rgba(0, 0, 0, .5);
   opacity: 0;
+  transition: visibility .3s linear, opacity .3s linear;
 }
