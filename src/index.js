@@ -69,7 +69,7 @@ function submitProfileForm (evt) {
     console.log(err);
   })
   .finally(function () {
-    changeSubmitButtonText(profileFormButton, 'Сохраненить');
+    changeSubmitButtonText(profileFormButton, 'Сохранить');
   });
 }
 
@@ -87,7 +87,7 @@ function addNewCard (evt) {
     console.log(err);
   })
   .finally(function () {
-    changeSubmitButtonText(addFormButton, 'Сохраненить');
+    changeSubmitButtonText(addFormButton, 'Сохранить');
   });
 }
 
@@ -105,7 +105,7 @@ function submitProfilePictureForm (evt) {
     console.log(err);
   })
   .finally(function () {
-    changeSubmitButtonText(profilePictureFormButton, 'Сохраненить');
+    changeSubmitButtonText(profilePictureFormButton, 'Сохранить');
   });
 }
 
