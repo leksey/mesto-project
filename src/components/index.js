@@ -1,8 +1,8 @@
-import './pages/index.css';
-import {openPopup, closePopup} from './components/modal.js';
-import {renderCard, addCardOnPage} from './components/cards.js';
-import {enableValidation, disableButton} from './components/validate.js';
-import {getInitialCards, getProfileData, editProfile, publishCard, editAvatar} from './components/api.js'
+import '../pages/index.css';
+import {openPopup, closePopup} from './modal.js';
+import {renderCard, addCardOnPage} from './cards.js';
+import {enableValidation, disableButton} from './validate.js';
+import {getInitialCards, getProfileData, editProfile, publishCard, editAvatar} from './api.js'
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
