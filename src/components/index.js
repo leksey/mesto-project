@@ -1,4 +1,8 @@
 import '../pages/index.css';
+// test
+import Api from './Api_wip.js';
+
+
 import {openPopup, closePopup} from './modal.js';
 import {renderCard, addCardOnPage} from './cards.js';
 import {enableValidation, disableButton} from './validate.js';
@@ -157,3 +161,13 @@ function changeSubmitButtonText (buttonElement, text) {
   buttonElement.value = text;
 }
 
+// test
+const api = new Api({
+  url: 'https://nomoreparties.co/v1/plus-cohort-10',
+  header: {
+    authorization: '9604af3d-5a7c-4d72-b14c-31174b7ac9d5',
+    'Content-Type': 'application/json'
+  }
+})
+
+console.log(api);
