@@ -1,29 +1,58 @@
 export default class Card {
-  constructor({data, profileId}, cardTemplate) {
+  constructor({data, profileId}, cardTemplate, renderer) {
     this._data = data;
     this._profileId = profileId;
     this._cardTemplate = cardTemplate;
   }
 
+  _setLikes (likesData, likeCounter) {
+    likeCounter.textContent = likesData.length;
+  }
+
+  _setLikeButtonStatus (likesData, likeButton) {
+    let isLikedByMe = false;
+    likesData.some(element => {
+      if(element._id === this._profileId) {
+        isLikedByMe = true;
+      }
+    });
+    if(isLikedByMe) {
+      likeButton.classList.add('card__like-button_status_active');
+    } else {
+      likeButton.classList.remove('card__like-button_status_active');
+    }
+  }
+
+  _getLikeAction (likesData) {
+    let action = 'PUT';
+    likesData.forEach(element => {
+      if(element._id === this._profileId) {
+        action = 'DELETE';
+      }
+    });
+    return action;
+  }
+
   _renderCard() {
-    const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
+    const cardElement = this._cardTemplate.querySelector('.card').cloneNode(true);
     const pic = cardElement.querySelector('.card__picture');
     const likeCounter = cardElement.querySelector('.card__like-counter');
     const cardCapture = cardElement.querySelector('.card__capture')
     const deleteButton = cardElement.querySelector('.card__delete-button');
     const likeButton = cardElement.querySelector('.card__like-button');
-    let likesArr = cardData.likes;
+
+    let likesArr = this._data.likes;
 
     pic.src = this._data.link;
     pic.alt = this._data.name;
-    cardCapture.textContent = cardData.name;
+    cardCapture.textContent = this._data.name;
 
     setLikes(likesArr, likeCounter);
-    setLikeButtonStatus(likesArr, profileId, likeButton);
+    setLikeButtonStatus(likesArr, likeButton);
 
 
-    likeButton.addEventListener('click', function(evt) {
-      const action = getLikeAction(likesArr, profileId);
+    likeButton.addEventListener('click', function() {
+      const action = getLikeAction(likesArr);
       likeCard(action, cardData._id)
         .then((data) => {
           likesArr = data.likes;
