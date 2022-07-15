@@ -170,4 +170,4 @@ const api = new Api({
   }
 })
 
-console.log(api);
+console.log(api.getProfileData());
