@@ -1,6 +1,7 @@
 import '../pages/index.css';
 // test
 import Api from './Api_wip.js';
+import Card from './Card_wip.js';
 
 
 import {openPopup, closePopup} from './modal.js';
@@ -170,4 +171,15 @@ const api = new Api({
   }
 })
 
-console.log(api.getProfileData());
+const cardTemplate = document.querySelector('#card-template').content;
+const card = new Card({
+  data: api.getInitialCards(),
+  profileId: profileData.id
+},
+cardTemplate,
+api.likeCard(),
+api.deleteCard(),
+openPopup()
+)
+
+console.log(card);

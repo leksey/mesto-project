@@ -1,8 +1,11 @@
 export default class Card {
-  constructor({data, profileId}, cardTemplate, renderer) {
+  constructor({data, profileId}, cardTemplate, likeCard, deleteCard, openPopup) {
     this._data = data;
     this._profileId = profileId;
     this._cardTemplate = cardTemplate;
+    this._likeCard = likeCard;
+    this._deleteCard = deleteCard;
+    this._openPopup = openPopup;
   }
 
   _setLikes (likesData, likeCounter) {
@@ -40,6 +43,7 @@ export default class Card {
     const cardCapture = cardElement.querySelector('.card__capture')
     const deleteButton = cardElement.querySelector('.card__delete-button');
     const likeButton = cardElement.querySelector('.card__like-button');
+    const popupPic = document.querySelector('.popup_pic');
 
     let likesArr = this._data.likes;
 
@@ -47,25 +51,25 @@ export default class Card {
     pic.alt = this._data.name;
     cardCapture.textContent = this._data.name;
 
-    setLikes(likesArr, likeCounter);
-    setLikeButtonStatus(likesArr, likeButton);
+    this._setLikes(likesArr, likeCounter);
+    this._setLikeButtonStatus(likesArr, likeButton);
 
 
     likeButton.addEventListener('click', function() {
-      const action = getLikeAction(likesArr);
-      likeCard(action, cardData._id)
+      const action = this._getLikeAction(likesArr);
+      this._likeCard(action, this._data) //TODO: check if 'this.data' works correctly
         .then((data) => {
           likesArr = data.likes;
-          setLikes(likesArr, likeCounter);
-          setLikeButtonStatus(likesArr, profileId, likeButton);
+          this._setLikes(likesArr, likeCounter);
+          this._setLikeButtonStatus(likesArr, likeButton);
         })
         .catch((err) => {
           console.log(err);
         });
     });
-    if (profileId === cardData.owner._id) {
+    if (this._profileId === this._data.owner._id) {
       deleteButton.addEventListener('click', function(evt) {
-        deleteCard(cardData._id)
+        this._deleteCard(this._data._id)
         .then(() => {
           evt.target.closest('.card').remove();
           })
@@ -78,10 +82,10 @@ export default class Card {
     }
 
     pic.addEventListener('click', function() {
-      openPopup(popupPic);
-      popupPicImg.src = cardData.link;
-      popupPicImg.alt = cardData.name;
-      popupPicCapture.textContent = cardData.name;
+      this._openPopup(popupPic);
+      popupPicImg.src = this._data.link;
+      popupPicImg.alt = this._data.name;
+      popupPicCapture.textContent = this._data.name;
     });
     return cardElement;
   }
@@ -96,7 +100,6 @@ import {openPopup} from './modal.js'
 import {deleteCard, likeCard} from './api.js'
 
 const cardTemplate = document.querySelector('#card-template').content;
-const popupPic = document.querySelector('.popup_pic');
 const popupPicImg = popupPic.querySelector('.popup__img');
 const popupPicCapture = popupPic.querySelector('.popup__capture');
 const placesContainer = document.querySelector('.places');
@@ -155,39 +158,11 @@ function renderCard (cardData, profileId) {
   return cardElement;
 }
 
-function addCardOnPage (card) {
-  placesContainer.prepend(card);
-}
+// function addCardOnPage (card) {
+//   placesContainer.prepend(card);
+// }
 
-function setLikes (likesData, likeCounter) {
-    likeCounter.textContent = likesData.length;
-}
-
-function getLikeAction (likesData, profileId) {
-  let action = 'PUT';
-  likesData.forEach(element => {
-    if(element._id === profileId) {
-      action = 'DELETE';
-    }
-  });
-  return action;
-}
-
-function setLikeButtonStatus (likesData, profileId, likeButton) {
-  let isLikedByMe = false;
-  likesData.some(element => {
-    if(element._id === profileId) {
-      isLikedByMe = true;
-    }
-  });
-  if(isLikedByMe) {
-    likeButton.classList.add('card__like-button_status_active');
-  } else {
-    likeButton.classList.remove('card__like-button_status_active');
-  }
-}
-
-export {renderCard, addCardOnPage};
+//export {renderCard, addCardOnPage};
 
 // приинимает в конструктор её данные и селектор её template-элемента;
 // содержит приватные методы, которые работают с разметкой, устанавливают слушателей событий;
