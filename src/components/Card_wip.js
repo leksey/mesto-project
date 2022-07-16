@@ -100,8 +100,10 @@ import {openPopup} from './modal.js'
 import {deleteCard, likeCard} from './api.js'
 
 const cardTemplate = document.querySelector('#card-template').content;
+const popupPic = document.querySelector('.popup_pic');
 const popupPicImg = popupPic.querySelector('.popup__img');
 const popupPicCapture = popupPic.querySelector('.popup__capture');
+
 const placesContainer = document.querySelector('.places');
 
 function renderCard (cardData, profileId) {

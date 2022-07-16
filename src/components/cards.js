@@ -24,7 +24,7 @@ function renderCard (cardData, profileId) {
   setLikeButtonStatus(likesArr, profileId, likeButton);
 
 
-  likeButton.addEventListener('click', function(evt) {
+  likeButton.addEventListener('click', function() {
     const action = getLikeAction(likesArr, profileId);
     likeCard(action, cardData._id)
       .then((data) => {

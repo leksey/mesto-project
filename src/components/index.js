@@ -7,7 +7,7 @@ import Card from './Card_wip.js';
 import {openPopup, closePopup} from './modal.js';
 import {renderCard, addCardOnPage} from './cards.js';
 import {enableValidation, disableButton} from './validate.js';
-import {getInitialCards, getProfileData, editProfile, publishCard, editAvatar} from './api.js'
+import {getInitialCards, getProfileData, editProfile, publishCard, editAvatar, likeCard} from './api.js'
 
 const profileEditButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
@@ -136,6 +136,17 @@ getProfileData()
   getInitialCards()
   .then((data) => {
     data.reverse().forEach(item => addCardOnPage(renderCard(item, profileData.id)));
+    const card = new Card({
+      data: api.getInitialCards(),
+      profileId: profileData.id
+    },
+    cardTemplate,
+    function(action, id) {api.likeCard(action, id)},
+    function(id) {api.deleteCard(id)},
+    function(element) {openPopup(element)}
+    );
+    console.log(profileData.id);
+    console.log(card);
     })
     .catch((err) => {
       console.log(err);
@@ -177,9 +188,7 @@ const card = new Card({
   profileId: profileData.id
 },
 cardTemplate,
-api.likeCard(),
-api.deleteCard(),
-openPopup()
+function(action, id) {api.likeCard(action, id)},
+function(id) {api.deleteCard(id)},
+function(element) {openPopup(element)}
 )
-
-console.log(card);
