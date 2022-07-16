@@ -182,12 +182,19 @@ api.getProfileData()
     data.reverse().forEach((item) => {
       const card = new Card({
         data: item,
-        profileId: profileData.id
+        profileId: profileData.id,
+        openPopup: () => {
+          console.log('test');
+        }
       },
       cardTemplate,
       function(action, id) {api.likeCard(action, id)},
       function(id) {api.deleteCard(id)},
-      function(element) {openPopup(element)}
+      function(popupElement) {
+        popupElement.classList.add('popup_opened');
+        window.addEventListener('keydown', handleEsc);
+        document.addEventListener('click', handleOverlayClick);
+      }
       );
       addCardOnPage(card.renderCard());
       })
