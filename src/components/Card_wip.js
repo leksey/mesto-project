@@ -36,7 +36,7 @@ export default class Card {
     return action;
   }
 
-  _renderCard() {
+  renderCard() {
     const cardElement = this._cardTemplate.querySelector('.card').cloneNode(true);
     const pic = cardElement.querySelector('.card__picture');
     const likeCounter = cardElement.querySelector('.card__like-counter');
@@ -57,6 +57,7 @@ export default class Card {
 
     likeButton.addEventListener('click', function() {
       const action = this._getLikeAction(likesArr);
+      console.log(action);
       this._likeCard(action, this._data) //TODO: check if 'this.data' works correctly
         .then((data) => {
           likesArr = data.likes;
@@ -88,10 +89,6 @@ export default class Card {
       popupPicCapture.textContent = this._data.name;
     });
     return cardElement;
-  }
-
-  addCardOnPage (card, cardContainer) {
-    cardContainer.prepend(card);
   }
 }
 

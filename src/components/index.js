@@ -129,32 +129,22 @@ profilePictureForm.addEventListener('submit', submitProfilePictureForm);
 
 enableValidation(validationElements);
 
-getProfileData()
-.then((data) => {
-  setProfileData(data);
-  renderProfile(profileData);
-  getInitialCards()
-  .then((data) => {
-    data.reverse().forEach(item => addCardOnPage(renderCard(item, profileData.id)));
-    const card = new Card({
-      data: api.getInitialCards(),
-      profileId: profileData.id
-    },
-    cardTemplate,
-    function(action, id) {api.likeCard(action, id)},
-    function(id) {api.deleteCard(id)},
-    function(element) {openPopup(element)}
-    );
-    console.log(profileData.id);
-    console.log(card);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-})
-  .catch((err) => {
-    console.log(err);
-});
+// getProfileData()
+// .then((data) => {
+//   setProfileData(data);
+//   renderProfile(profileData);
+//   getInitialCards()
+//   .then((data) => {
+//     data.reverse().forEach(item => addCardOnPage(renderCard(item, profileData.id)));
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// })
+//   .catch((err) => {
+//     console.log(err);
+// });
+
 
 function renderProfile (profileData) {
   profileName.textContent = profileData.name;
@@ -182,13 +172,47 @@ const api = new Api({
   }
 })
 
+api.getProfileData()
+  .then((data) => {
+  setProfileData(data);
+  renderProfile(profileData);
+  api.getInitialCards()
+  .then((data) => {
+    //data.reverse().forEach(item => addCardOnPage(renderCard(item, profileData.id)));
+    data.reverse().forEach((item) => {
+      const card = new Card({
+        data: item,
+        profileId: profileData.id
+      },
+      cardTemplate,
+      function(action, id) {api.likeCard(action, id)},
+      function(id) {api.deleteCard(id)},
+      function(element) {openPopup(element)}
+      );
+      addCardOnPage(card.renderCard());
+      })
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  })
+    .catch((err) => {
+      console.log(err);
+  });
+
+
+
 const cardTemplate = document.querySelector('#card-template').content;
-const card = new Card({
-  data: api.getInitialCards(),
-  profileId: profileData.id
-},
-cardTemplate,
-function(action, id) {api.likeCard(action, id)},
-function(id) {api.deleteCard(id)},
-function(element) {openPopup(element)}
-)
+
+// const card = new Card({
+//   data: data[0],
+//   profileId: profileData.id
+// },
+// cardTemplate,
+// function(action, id) {api.likeCard(action, id)},
+// function(id) {api.deleteCard(id)},
+// function(element) {openPopup(element)}
+// );
+// console.log(profileData.id);
+// console.log(card);
+// addCardOnPage(card.renderCard());
