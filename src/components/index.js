@@ -183,19 +183,18 @@ api.getProfileData()
       const card = new Card({
         data: item,
         profileId: profileData.id,
-        openPopup: () => {
+        openPopup: (popupPic) => {
           console.log('test');
-        }
-      },
-      cardTemplate,
-      function(action, id) {api.likeCard(action, id)},
-      function(id) {api.deleteCard(id)},
-      function(popupElement) {
+        },
+        cardTemplate,
+        function(action, id) {api.likeCard(action, id)},
+        function(id) {api.deleteCard(id)},
+        function(popupElement) {
         popupElement.classList.add('popup_opened');
         window.addEventListener('keydown', handleEsc);
         document.addEventListener('click', handleOverlayClick);
       }
-      );
+      });
       addCardOnPage(card.renderCard());
       })
     })

@@ -1,5 +1,5 @@
 export default class Card {
-  constructor({data, profileId, openPopup}, cardTemplate, likeCard, deleteCard) {
+  constructor({data, profileId, openPopup, cardTemplate, likeCard, deleteCard}) {
     this._data = data;
     this._profileId = profileId;
     this._cardTemplate = cardTemplate;
