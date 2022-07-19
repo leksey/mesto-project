@@ -4,14 +4,7 @@ export default class Api {
       this.header=header;
     }
 
-    getInitialCards() {
-      return fetch(`${this.url}/cards`, {
-        headers: this.header
-      })
-        .then(res => {
-          return this._handleResponse(res);
-        });
-    };
+    // PROFILE
 
     getProfileData() {
       return fetch(`${this.url}/users/me`, {
@@ -36,6 +29,30 @@ export default class Api {
         });
     }
 
+    editAvatar(link) {
+      return fetch(`${this.url}/users/me/avatar`, {
+        method: 'PATCH',
+        headers: this.header,
+        body: JSON.stringify({
+          avatar: link
+        })
+      })
+        .then(res => {
+          return this._handleResponse(res);
+        });
+    }
+
+    // CARDS
+
+    getInitialCards() {
+      return fetch(`${this.url}/cards`, {
+        headers: this.header
+      })
+        .then(res => {
+          return this._handleResponse(res);
+        });
+    };
+
     publishCard(name, link) {
       return fetch(`${this.url}/cards`, {
         method: 'POST',
@@ -44,16 +61,6 @@ export default class Api {
           name: name,
           link: link
         })
-      })
-        .then(res => {
-          return this._handleResponse(res);
-        });
-    }
-
-    deleteCard(id) {
-      return fetch(`${this.url}/cards/${id}`, {
-        method: 'DELETE',
-        headers: this.header
       })
         .then(res => {
           return this._handleResponse(res);
@@ -70,18 +77,19 @@ export default class Api {
         });
     }
 
-    editAvatar(link) {
-      return fetch(`${this.url}/users/me/avatar`, {
-        method: 'PATCH',
-        headers: this.header,
-        body: JSON.stringify({
-          avatar: link
-        })
+    deleteCard(id) {
+      return fetch(`${this.url}/cards/${id}`, {
+        method: 'DELETE',
+        headers: this.header
       })
         .then(res => {
           return this._handleResponse(res);
         });
     }
+
+  
+
+    // respone handler
 
     _handleResponse(res) {
       if (res.ok) {
