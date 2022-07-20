@@ -1,5 +1,5 @@
 export default class Card {
-    constructor({res, cardPopupHandler, cardDeleteHandler, likeCard, dislikeCard}, profileId, template) {
+    constructor({res, cardPopupHandler, likeCard, dislikeCard}, profileId, template) {
         this._name = res.name;
         this._link = res.link;
         this._likes = res.likes;
@@ -8,7 +8,6 @@ export default class Card {
         this._template = template;
         //from api
         this._cardPopupHandler = cardPopupHandler;
-        this._cardDeleteHandler = cardDeleteHandler;
         this._likeCard = likeCard;
         this._dislikeCard = dislikeCard;
     }
