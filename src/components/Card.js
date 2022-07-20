@@ -14,7 +14,7 @@ export default class Card {
     }
 
     _getTemplate() {
-        return document.querySelector(#${this._template}).content.querySelector('.card').cloneNode(true);
+        return document.querySelector(`#${this._template}`).content.querySelector('.card').cloneNode(true);
     }
 
     generate() {

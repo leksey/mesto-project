@@ -1,7 +1,8 @@
 import '../pages/index.css';
 // test
 import Api from './Api_wip.js';
-import Card from './Card_wip.js';
+// import Card from './Card_wip.js';
+import Card from './Card.js';
 import FormValidator from './FormValidator_wip.js';
 
 
