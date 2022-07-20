@@ -69,7 +69,7 @@ function submitProfileForm (evt) {
     setProfileData(data);
     renderProfile(data);
     closePopup(popupProfile);
-    //disableButton(profileFormButton, validationElements.inactiveButtonClass);
+    disableButton(profileFormButton, validationElements.inactiveButtonClass);
 
   })
   .catch((err) => {
