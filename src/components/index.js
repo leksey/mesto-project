@@ -2,6 +2,7 @@ import '../pages/index.css';
 // test
 import Api from './Api_wip.js';
 import Card from './Card_wip.js';
+import FormValidator from './FormValidator_wip.js';
 
 
 import {openPopup, closePopup} from './modal.js';
@@ -68,7 +69,8 @@ function submitProfileForm (evt) {
     setProfileData(data);
     renderProfile(data);
     closePopup(popupProfile);
-    disableButton(profileFormButton, validationElements.inactiveButtonClass);
+    //disableButton(profileFormButton, validationElements.inactiveButtonClass);
+
   })
   .catch((err) => {
     console.log(err);
@@ -128,6 +130,7 @@ addForm.addEventListener('submit', addNewCard);
 profilePictureForm.addEventListener('submit', submitProfilePictureForm);
 
 enableValidation(validationElements);
+
 
 // getProfileData()
 // .then((data) => {
