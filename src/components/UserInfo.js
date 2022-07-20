@@ -1,64 +1,21 @@
 export default class UserInfo {
-    constructor({ nameSelector, aboutSelector, getProfileData, setUserInfo, editAvatar}){
-        this._nameSelector = nameSelector;
-        this._aboutSelector = aboutSelector;
-        this._getProfileData = getProfileData;
-        this._setUserInfo = setUserInfo;
-        this._editAvatar = editAvatar;
-    }
-
-    _setProfileData (data) {
-      const profileData = {};
-      profileData.name = data.name;
-      profileData.about = data.about;
-      profileData.avatar = data.avatar;
-      profileData.id = data._id;
-      return profileData;
+    constructor({ name, about, avatar }){
+        this._name = document.querySelector(name);
+        this._about = document.querySelector(about);
+        this._avatar = document.querySelector(avatar);
     }
 
     getUserInfo() {
-        this._getProfileData
-        .then((data) => {
-          return this._setProfileData(data);
-        })
-        .catch((err) => {
-          console.log(err);
-          return err;
-        });
-
+        return {
+            name: this._name.textContent,
+            about: this._about.textContent
+        }
     }
 
-    setUserInfo(name, about) {
-      this._getProfileData(name, about)
-      .then((data) => {
-        console.log(`_setUserInfo: ${this._setProfileData(data)}`); //TODO: remove before release
-        return this._setProfileData(data);
-        //renderProfile(data); //TODO: Section/render method here
-        //closePopup(popupProfile);
-        //disableButton(profileFormButton, validationElements.inactiveButtonClass);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(function () {
-        changeSubmitButtonText(profileFormButton, 'Сохранить');
-      });
-    }
-
-    editAvatar(picUrl) {
-      this._editAvatar(picUrl)
-      .then((data) => {
-        console.log(`_setUserInfo: ${this._setProfileData(data)}`); //TODO: remove before release
-        return this._setProfileData(data);
-        // renderProfile(data);
-        // closePopup(popupProfilePic);
-        // disableButton(profilePictureFormButton, validationElements.inactiveButtonClass);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(function () {
-        changeSubmitButtonText(profilePictureFormButton, 'Сохранить');
-      });
+    setUserInfo({name, about, avatar, id}) {
+        this._name.textContent = name;
+        this._about.textContent = about;
+        this._avatar.src = `${avatar}`;
+        this._id = id;
     }
 }
