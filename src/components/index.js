@@ -48,34 +48,7 @@ const validationElements = {
     inputErrorClass: 'form__input-text_status_error',
 };
 
-function createCard(item, ownerId) {
-    const card = new Card(
-        {
-            res: item,
-            cardPopupHandler: () => {
-                cardImagePopup.open(item);
-            },
-            likeCard: () => {
-                api.likeCard(item._id)
-                .then((item) => {
-                    card.setLikes(item.likes);
-                    card.handleLikeStatus();
-                })
-                .catch((err) => console.log(err));
-            },
-            dislikeCard: () => {
-                api.dislikeCard(item._id)
-                .then((item) => {
-                    card.setLikes(item.likes);
-                    card.handleLikeStatus();
-                })
-            }
-        },
-        ownerId,
-        'card-template'
-    );
-    return card.generate();
-}
+
 
 console.log(card);
 
