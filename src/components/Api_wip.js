@@ -67,9 +67,9 @@ export default class Api {
         });
     }
 
-    likeCard(action, id) {
+    likeCard(id) {
       return fetch(`${this.url}/cards/likes/${id}`, {
-        method: action,
+        method: 'PUT',
         headers: this.header
       })
         .then(res => {
