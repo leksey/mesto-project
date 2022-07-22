@@ -1,4 +1,35 @@
+//new code
 import '../pages/index.css';
+import { apiConfig } from './utils/constants.js';
+
+import Api from './Api_class.js'; //TODO: fix path
+
+const api = new Api({url: apiConfig.baseUrl,
+  header: apiConfig.headers
+});
+console.log(api);
+
+api.getProfileData()
+.then((data) => {
+  //setProfileData(data); //TODO: Replace with profile method
+  //renderProfile(profileData); //TODO: Replace with Section method
+  console.log(`Api.getProfileData() - result: ${data}`);
+  api.getInitialCards()
+  .then((data) => {
+    //data.reverse().forEach(item => addCardOnPage(renderCard(item, profileData.id))); //TODO: replace with Section method
+    console.log(`Api.getInitialCards() - result: ${data}`);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+})
+  .catch((err) => {
+    console.log(err);
+});
+
+
+//old code
+
 import {openPopup, closePopup} from './modal.js';
 import {renderCard, addCardOnPage} from './cards.js';
 import {enableValidation, disableButton} from './validate.js';
