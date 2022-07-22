@@ -6,4 +6,10 @@ const apiConfig = {
   }
 }
 
-export {apiConfig};
+const profileSelectors = {
+  name: '.profile__name',
+  caption: '.profile__caption',
+  pic: '.profile__picture'
+}
+
+export {apiConfig, profileSelectors};

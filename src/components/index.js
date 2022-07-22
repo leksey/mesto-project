@@ -1,23 +1,30 @@
 //new code
 import '../pages/index.css';
-import { apiConfig } from './utils/constants.js';
+import { apiConfig, profileSelectors} from './utils/constants.js';
 
 import Api from './Api_class.js'; //TODO: fix path
+import UserInfo from './UserInfo.js';
 
 const api = new Api({url: apiConfig.baseUrl,
   header: apiConfig.headers
 });
-console.log(api);
+console.log(api); //TODO: remove
+
+const userInfo = new UserInfo({nameSelector: profileSelectors.name,
+  aboutSelector: profileSelectors.caption,
+  avatarSelector: profileSelectors.pic
+
+});
+console.log(userInfo); //TODO: remove
 
 api.getProfileData()
 .then((data) => {
-  //setProfileData(data); //TODO: Replace with profile method
-  //renderProfile(profileData); //TODO: Replace with Section method
-  console.log(`Api.getProfileData() - result: ${data}`);
+  userInfo.setUserInfo(data.name, data.about, data.avatar, data._id);
+  console.log(`Api.getProfileData() - result: ${data}`); //TODO: remove
   api.getInitialCards()
   .then((data) => {
     //data.reverse().forEach(item => addCardOnPage(renderCard(item, profileData.id))); //TODO: replace with Section method
-    console.log(`Api.getInitialCards() - result: ${data}`);
+    console.log(`Api.getInitialCards() - result: ${data}`); //TODO: remove
     })
     .catch((err) => {
       console.log(err);
@@ -157,8 +164,8 @@ enableValidation(validationElements);
 
 getProfileData()
 .then((data) => {
-  setProfileData(data);
-  renderProfile(profileData);
+  //setProfileData(data);
+  //renderProfile(profileData);
   getInitialCards()
   .then((data) => {
     data.reverse().forEach(item => addCardOnPage(renderCard(item, profileData.id)));
