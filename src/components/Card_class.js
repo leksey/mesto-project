@@ -26,27 +26,21 @@ export default class Card {
   }
 
   setLikeButtonStatus (data) {
-    let isLikedByMe = false;
-    data.some(element => {
+    data.some((element) => {
       if(element._id === this._profileId) {
-        isLikedByMe = true;
+        this._likeButton.classList.add('card__like-button_status_active');
+      } else {
+        this._likeButton.classList.remove('card__like-button_status_active');
       }
-    });
-    if(isLikedByMe) {
-      this._likeButton.classList.add('card__like-button_status_active');
-    } else {
-      this._likeButton.classList.remove('card__like-button_status_active');
-    }
-    return this._likeButton.classList;
+    })
   }
 
   _handleLike() {
-    console.log(this._likesData);
     this._likesData.forEach((element) => {
-      if(element._id === this._profileId) {
-        this._likeCard;
+      if(element._id != this._profileId) {
+        this._likeCard();
       } else {
-        this._unLikeCard;
+        this._unLikeCard();
       }
     })
   }
@@ -60,7 +54,9 @@ export default class Card {
   }
 
   _setEventListeners () {
-    this._likeButton.addEventListener('click', this._handleLike);
+    this._likeButton.addEventListener('click',() => {
+      this._handleLike();
+    });
     this._deleteButton.addEventListener('click', this._deleteCard);
     // this._pic.addEventListener('click', this._handlePopup);
   }
