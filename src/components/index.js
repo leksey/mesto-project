@@ -1,9 +1,10 @@
 //new code
 import '../pages/index.css';
-import { apiConfig, profileSelectors, validationElements, profileForm} from './utils/constants.js';
+import { apiConfig, profileSelectors, validationElements, profileForm, cardTemplate} from './utils/constants.js';
 
 import Api from './Api_class.js'; //TODO: fix path
 import UserInfo from './UserInfo.js';
+import Card from './Card_class.js';
 import FormValidator from './FormValidator';
 
 const api = new Api({url: apiConfig.baseUrl,
@@ -25,7 +26,10 @@ api.getProfileData()
   api.getInitialCards()
   .then((data) => {
     //data.reverse().forEach(item => addCardOnPage(renderCard(item, profileData.id))); //TODO: replace with Section method
-    console.log(`Api.getInitialCards() - result: ${data}`); //TODO: remove
+    data.reverse().forEach((item) => {
+      const card = new Card (item, cardTemplate, userInfo.id);
+      console.log(card._setLikeButtonStatus());
+    });
     })
     .catch((err) => {
       console.log(err);

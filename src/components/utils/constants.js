@@ -23,4 +23,6 @@ const validationElements = {
 const popupProfile = document.querySelector('.popup_profile');
 const profileForm = popupProfile.querySelector('.form');
 
-export {apiConfig, profileSelectors, validationElements, profileForm};
+const cardTemplate = '#card-template';
+
+export {apiConfig, profileSelectors, validationElements, profileForm, cardTemplate};

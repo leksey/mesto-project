@@ -65,13 +65,22 @@ export default class Api {
       });
   }
 
-  likeCard(id) {
-    return fetch(`${this._url}/cards/likes/${id}`, {
+  likeCard (id) {
+    return fetch(`${config.baseUrl}/cards/likes/${id}`, {
       method: 'PUT',
-      headers: this._header
+      headers: config.headers
     })
       .then(res => {
-        return this._handleResponse(res);
+        return handleResponse(res);
+      });
+  }
+  unLikeCard (id) {
+    return fetch(`${config.baseUrl}/cards/likes/${id}`, {
+      method: 'DELETE',
+      headers: config.headers
+    })
+      .then(res => {
+        return handleResponse(res);
       });
   }
 
