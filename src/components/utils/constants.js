@@ -20,4 +20,7 @@ const validationElements = {
   inputErrorClass: 'form__input-text_status_error',
 };
 
-export {apiConfig, profileSelectors, validationElements};
+const popupProfile = document.querySelector('.popup_profile');
+const profileForm = popupProfile.querySelector('.form');
+
+export {apiConfig, profileSelectors, validationElements, profileForm};

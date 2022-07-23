@@ -1,6 +1,6 @@
 //new code
 import '../pages/index.css';
-import { apiConfig, profileSelectors, validationElements} from './utils/constants.js';
+import { apiConfig, profileSelectors, validationElements, profileForm} from './utils/constants.js';
 
 import Api from './Api_class.js'; //TODO: fix path
 import UserInfo from './UserInfo.js';
@@ -35,7 +35,10 @@ api.getProfileData()
     console.log(err);
 });
 
-const formValidator = new FormValidator(validationElements);
+const formValidator = new FormValidator({
+  data: validationElements
+},
+profileForm);
 console.log(formValidator); //TODO: remove
 
 //old code
@@ -56,7 +59,6 @@ const addForm = popupAdd.querySelector('.form');
 const addFormButton = addForm.querySelector('.form__submit-button');
 
 const popupProfile = document.querySelector('.popup_profile');
-const profileForm = popupProfile.querySelector('.form');
 const profileFormButton = profileForm.querySelector('.form__submit-button');
 const profileFormName = profileForm.querySelector('.form__input-text_field_name');
 const profileFormCaption = profileForm.querySelector('.form__input-text_field_caption');

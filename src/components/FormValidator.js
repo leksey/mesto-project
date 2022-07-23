@@ -1,11 +1,15 @@
 export default class FormValidator {
-    constructor(data, formElement) {
+    constructor({data}, formElement) {
         this._formSelector = data.formSelector;
         this._inputSelector = data.inputSelector;
         this._submitButtonSelector = data.submitButtonSelector;
         this._inactiveButtonClass = data.inactiveButtonClass;
         this._inputErrorClass = data.inputErrorClass;
-        this._formElemenet = formElement;
+
+        this._formElement = formElement;
+
+        this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+        this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
     }
 
     _showInputError(inputElement, errorMessage) {
@@ -20,15 +24,15 @@ export default class FormValidator {
         errorElement.textContent = '';
     }
 
-    _hasInvalidInput(inputList) {
-        return inputList.some((inputElement) => { //TODO: check if right
+    _hasInvalidInput() {
+        return this._inputList.some((inputElement) => { //TODO: check if right
             return !inputElement.validity.valid;
         })
     }
 
-    _toggleButtonState(inputList, buttonElement) {
-        if (hasInvalidInput(inputList)) {
-            disableButton(buttonElement, this._inactiveButtonClass);
+    _toggleButtonState() {
+        if (this._hasInvalidInput(this._inputList)) {
+            this._disableButton(this._buttonElement, this._inactiveButtonClass);
         } else {
         buttonElement.classList.remove(this._inactiveButtonClass);
         buttonElement.disabled = false;
@@ -37,48 +41,31 @@ export default class FormValidator {
 
     _checkInputValidity(inputElement) {
         if (!inputElement.validity.valid) {
-        showInputError(inputElement, inputElement.validationMessage);
+        this._showInputError(inputElement, inputElement.validationMessage);
         } else {
-        hideInputError(inputElement);
+        this._hideInputError(inputElement);
         }
    }
-}
 
-  
-  const checkInputValidity = (formElement, inputElement, validationElements) => {
-    if (!inputElement.validity.valid) {
-      showInputError(formElement, inputElement, inputElement.validationMessage, validationElements);
-    } else {
-      hideInputError(formElement, inputElement, validationElements);
-    }
-  };
-  
-  const setEventListeners = (formElement, validationElements) => {
-    const inputList = Array.from(formElement.querySelectorAll(validationElements.inputSelector));
-    const buttonElement = formElement.querySelector(validationElements.submitButtonSelector);
-    toggleButtonState(inputList, buttonElement, validationElements);
-    inputList.forEach((inputElement) => {
+    _setEventListeners() {
+    this._toggleButtonState();
+    this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', function () {
-        checkInputValidity(formElement, inputElement, validationElements);
-        toggleButtonState(inputList, buttonElement, validationElements);
-      });
-    });
-  };
-  
-  const enableValidation = (validationElements) => {
-    const formList = Array.from(document.querySelectorAll(validationElements.formSelector));
-    formList.forEach((formElement) => {
-      formElement.addEventListener('submit', function (evt) {
-        evt.preventDefault();
-      });
-      setEventListeners(formElement, validationElements);
-    });
-  };
-  
-  function disableButton (button, classToAdd) {
-    button.classList.add(classToAdd);
-    button.disabled = true;
-  }
-  
-  export {enableValidation, disableButton};
-  
+            this._checkInputValidity(inputElement);
+            this._toggleButtonState();
+            });
+        });
+    };
+
+    _disableButton() {
+        this._buttonElement.classList.add(this._inactiveButtonClass);
+        this._buttonElement.disabled = true;
+    }
+
+    enableValidation() {
+        this._formElement.addEventListener('submit', function (evt) {
+            evt.preventDefault();
+            });
+        this._setEventListeners();
+    }; 
+} 
