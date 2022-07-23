@@ -1,14 +1,14 @@
 export default class Card {
-  constructor (data, templateSelector, profileId/*, likeCard, unLikeCard, deleteCard, handlePopup*/) {
+  constructor (data, templateSelector, profileId, { likeCard, unLikeCard } /*, deleteCard }/*, handlePopup*/) {
     this._data = data;
     this._profileId = profileId;
     this._likesData = data.likes;
     this._link = data.link;
     this._name = data.name;
 // // from API
-//     this._likeCard = likeCard;
-//     this._unLikeCard = unLikeCard;
-//     this._deleteCard = deleteCard;
+    this._likeCard = likeCard;
+    this._unLikeCard = unLikeCard;
+    //this._deleteCard = deleteCard;
 
 // // from popup
 //     this._handlePopup = handlePopup;
@@ -21,13 +21,13 @@ export default class Card {
     this._deleteButton = this._template.querySelector('.card__delete-button');
   }
 
-  _setLikes () {
-    this._likeCounter.textContent = this._likesData.length;
+  setLikes (data) {
+    this._likeCounter.textContent = data.length;
   }
 
-  _setLikeButtonStatus () {
+  setLikeButtonStatus (data) {
     let isLikedByMe = false;
-    this._likesData.some(element => {
+    data.some(element => {
       if(element._id === this._profileId) {
         isLikedByMe = true;
       }
@@ -41,6 +41,7 @@ export default class Card {
   }
 
   _handleLike() {
+    console.log(this._likesData);
     this._likesData.forEach((element) => {
       if(element._id === this._profileId) {
         this._likeCard;
@@ -53,13 +54,15 @@ export default class Card {
   _checkIfMine() {
     if (this._profileId != this._data.owner._id) {
       this._deleteButton.classList.add('card__delete-button_status_hidden');
+    } else {
+      this._deleteButton.classList.remove('card__delete-button_status_hidden');
     }
   }
 
   _setEventListeners () {
     this._likeButton.addEventListener('click', this._handleLike);
     this._deleteButton.addEventListener('click', this._deleteCard);
-    this._pic.addEventListener('click', this._handlePopup);
+    // this._pic.addEventListener('click', this._handlePopup);
   }
 
   renderCard () {
@@ -69,9 +72,9 @@ export default class Card {
     this._cardCapture.textContent = this._name;
 
     this._checkIfMine();
-    this._setLikes();
-    this._setLikeButtonStatus();
-//    this._setEventListeners();
+    this.setLikes(this._likesData);
+    this.setLikeButtonStatus(this._likesData);
+    this._setEventListeners();
 
     return this._template;
   }

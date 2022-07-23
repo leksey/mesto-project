@@ -21,14 +21,35 @@ console.log(userInfo); //TODO: remove
 
 api.getProfileData()
 .then((data) => {
-  userInfo.setUserInfo(data.name, data.about, data.avatar, data._id);
+  userInfo.setUserInfo(data.name, data.about, data.avatar, data._id, );
   console.log(`Api.getProfileData() - result: ${data}`); //TODO: remove
   api.getInitialCards()
   .then((data) => {
     //data.reverse().forEach(item => addCardOnPage(renderCard(item, profileData.id))); //TODO: replace with Section method
     data.reverse().forEach((item) => {
-      const card = new Card (item, cardTemplate, userInfo.id);
-      console.log(card.renderCard());
+      const card = new Card (item, cardTemplate, userInfo.id, {
+        likeCard: () => {
+          api.likeCard(item._id)
+          .then((data) => {
+            card.setLikes(data.likes);
+            card.setLikeButtonStatus(data.likes);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        },
+        unLikeCard: () => {
+          api.unLikeCard(item._id)
+          .then((data) => {
+            card.setLikes(data.likes);
+            card.setLikeButtonStatus(data.likes);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        }//, , deleteCard
+      });
+      addCardOnPage(card.renderCard());
     });
     })
     .catch((err) => {
@@ -164,21 +185,21 @@ profilePictureForm.addEventListener('submit', submitProfilePictureForm);
 
 enableValidation(validationElements);
 
-getProfileData()
-.then((data) => {
-  //setProfileData(data);
-  //renderProfile(profileData);
-  getInitialCards()
-  .then((data) => {
-    data.reverse().forEach(item => addCardOnPage(renderCard(item, profileData.id)));
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-})
-  .catch((err) => {
-    console.log(err);
-});
+// getProfileData()
+// .then((data) => {
+//   //setProfileData(data);
+//   //renderProfile(profileData);
+//   getInitialCards()
+//   .then((data) => {
+//     data.reverse().forEach(item => addCardOnPage(renderCard(item, profileData.id)));
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// })
+//   .catch((err) => {
+//     console.log(err);
+// });
 
 function renderProfile (profileData) {
   profileName.textContent = profileData.name;
