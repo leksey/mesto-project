@@ -28,7 +28,7 @@ api.getProfileData()
     //data.reverse().forEach(item => addCardOnPage(renderCard(item, profileData.id))); //TODO: replace with Section method
     data.reverse().forEach((item) => {
       const card = new Card (item, cardTemplate, userInfo.id);
-      console.log(card._setLikeButtonStatus());
+      console.log(card.renderCard());
     });
     })
     .catch((err) => {

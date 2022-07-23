@@ -1,10 +1,17 @@
 export default class Card {
-  constructor (data, templateSelector, profileId) {
+  constructor (data, templateSelector, profileId/*, likeCard, unLikeCard, deleteCard, handlePopup*/) {
     this._data = data;
     this._profileId = profileId;
     this._likesData = data.likes;
     this._link = data.link;
     this._name = data.name;
+// // from API
+//     this._likeCard = likeCard;
+//     this._unLikeCard = unLikeCard;
+//     this._deleteCard = deleteCard;
+
+// // from popup
+//     this._handlePopup = handlePopup;
 
     this._template = document.querySelector(templateSelector).content.querySelector('.card').cloneNode(true);
     this._likeCounter = this._template.querySelector('.card__like-counter');
@@ -33,45 +40,39 @@ export default class Card {
     return this._likeButton.classList;
   }
 
-  _setEventListeners () {
-    this._likeButton.addEventListener('click', this._);
+  _handleLike() {
+    this._likesData.forEach((element) => {
+      if(element._id === this._profileId) {
+        this._likeCard;
+      } else {
+        this._unLikeCard;
+      }
+    })
   }
 
-  renderCard (cardData, profileId) {
-    let likesArr = cardData.likes;
+  _checkIfMine() {
+    if (this._profileId != this._data.owner._id) {
+      this._deleteButton.classList.add('card__delete-button_status_hidden');
+    }
+  }
+
+  _setEventListeners () {
+    this._likeButton.addEventListener('click', this._handleLike);
+    this._deleteButton.addEventListener('click', this._deleteCard);
+    this._pic.addEventListener('click', this._handlePopup);
+  }
+
+  renderCard () {
 
     this._pic.src = this._link;
     this._pic.alt = this._name;
     this._cardCapture.textContent = this._name;
 
+    this._checkIfMine();
     this._setLikes();
     this._setLikeButtonStatus();
+//    this._setEventListeners();
 
-
-
-
-
-    if (profileId === this._likesData.owner._id) {
-      this._deleteButton.addEventListener('click', function(evt) {
-        deleteCard(cardData._id)
-        .then(() => {
-          evt.target.closest('.card').remove();
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      });
-    } else {
-      this._deleteButton.classList.add('card__delete-button_status_hidden');
-    }
-
-    this._pic.addEventListener('click', function() {
-      openPopup(popupPic);
-      popupPicImg.src = cardData.link;
-      popupPicImg.alt = cardData.name;
-      popupPicCapture.textContent = cardData.name;
-    });
-    return cardElement;
+    return this._template;
   }
-
 }
