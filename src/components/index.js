@@ -1,9 +1,10 @@
 //new code
 import '../pages/index.css';
-import { apiConfig, profileSelectors} from './utils/constants.js';
+import { apiConfig, profileSelectors, validationElements} from './utils/constants.js';
 
 import Api from './Api_class.js'; //TODO: fix path
 import UserInfo from './UserInfo.js';
+import FormValidator from './FormValidator';
 
 const api = new Api({url: apiConfig.baseUrl,
   header: apiConfig.headers
@@ -34,6 +35,8 @@ api.getProfileData()
     console.log(err);
 });
 
+const formValidator = new FormValidator(validationElements);
+console.log(formValidator); //TODO: remove
 
 //old code
 
@@ -71,13 +74,6 @@ const profilePictureInput = profilePictureForm.querySelector('.form__input-text_
 const profileData = {};
 
 
-const validationElements = {
-  formSelector: '.form',
-  inputSelector: '.form__input-text',
-  submitButtonSelector: '.form__submit-button',
-  inactiveButtonClass: 'form__submit-button_status_inactive',
-  inputErrorClass: 'form__input-text_status_error',
-};
 
 function handleEditProfilePopup () {
   openPopup(popupProfile);

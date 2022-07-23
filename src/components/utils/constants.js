@@ -12,4 +12,12 @@ const profileSelectors = {
   pic: '.profile__picture'
 }
 
-export {apiConfig, profileSelectors};
+const validationElements = {
+  formSelector: '.form',
+  inputSelector: '.form__input-text',
+  submitButtonSelector: '.form__submit-button',
+  inactiveButtonClass: 'form__submit-button_status_inactive',
+  inputErrorClass: 'form__input-text_status_error',
+};
+
+export {apiConfig, profileSelectors, validationElements};
