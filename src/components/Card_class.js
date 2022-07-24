@@ -32,7 +32,6 @@ export default class Card {
   setLikes (data) {
     this._likesData = data;
     this._likeCounter.textContent = this._likesData.length;
-    console.log(this._likesData);
     this._setLikeButtonStatus();
   }
 

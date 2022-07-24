@@ -1,11 +1,12 @@
 //new code
 import '../pages/index.css';
-import { apiConfig, profileSelectors, validationElements, profileForm, cardTemplate} from './utils/constants.js';
+import { apiConfig, profileSelectors, validationElements, profileForm, cardTemplate, cardsContainerSelector} from './utils/constants.js';
 
 import Api from './Api_class.js'; //TODO: fix path
 import UserInfo from './UserInfo.js';
 import Card from './Card_class.js';
 import FormValidator from './FormValidator';
+import Section from './Section.js';
 
 const api = new Api({url: apiConfig.baseUrl,
   header: apiConfig.headers
@@ -23,38 +24,45 @@ api.getProfileData()
   api.getInitialCards()
   .then((data) => {
     //data.reverse().forEach(item => addCardOnPage(renderCard(item, profileData.id))); //TODO: replace with Section method
-    data.reverse().forEach((item) => {
-      const card = new Card (item, cardTemplate, userInfo.id, {
-        likeCard: () => {
-          api.likeCard(item._id)
-          .then((data) => {
-            card.setLikes(data.likes);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-        },
-        unLikeCard: () => {
-          api.unLikeCard(item._id)
-          .then((data) => {
-            card.setLikes(data.likes);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-        },
-        deleteCard: () => {
-          api.deleteCard(item._id)
-          .then(() => {
-            card.removeCard();
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
-      });
-      addCardOnPage(card.renderCard());
-    });
+    const cardSection = new Section(
+      {
+        items: data.reverse(),
+        renderer: (item) => {
+          const card = new Card (item, cardTemplate, userInfo.id, {
+                likeCard: () => {
+                  api.likeCard(item._id)
+                  .then((data) => {
+                    card.setLikes(data.likes);
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+                },
+                unLikeCard: () => {
+                  api.unLikeCard(item._id)
+                  .then((data) => {
+                    card.setLikes(data.likes);
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+                },
+                deleteCard: () => {
+                  api.deleteCard(item._id)
+                  .then(() => {
+                    card.removeCard();
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                }
+              });
+              return card.renderCard();
+            }
+      },
+        cardsContainerSelector
+    );
+      cardSection.renderItems();
     })
     .catch((err) => {
       console.log(err);
@@ -68,7 +76,6 @@ const formValidator = new FormValidator({
   data: validationElements
 },
 profileForm);
-console.log(formValidator); //TODO: remove
 
 //old code
 

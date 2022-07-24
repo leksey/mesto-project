@@ -25,4 +25,6 @@ const profileForm = popupProfile.querySelector('.form');
 
 const cardTemplate = '#card-template';
 
-export {apiConfig, profileSelectors, validationElements, profileForm, cardTemplate};
+const cardsContainerSelector = '.places';
+
+export {apiConfig, profileSelectors, validationElements, profileForm, cardTemplate, cardsContainerSelector};
