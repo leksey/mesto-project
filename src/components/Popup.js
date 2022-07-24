@@ -1,46 +1,38 @@
 export default class Popup {
     constructor(popupSelector) {
-        this.popupSelector = popupSelector;
+        this._popupSelector = popupSelector;
+
+        this._popup = document.querySelector(this._popupSelector);
+        this._popupCloseButton = this._popup.querySelector('.popup__close-button');
     }
 
-    _handleEscClose() {
+    _handleEscClose(evt) {
+        if (evt.key === 'Escape') {
+            this.close();
+          }
+    }
 
+    _handleOverlayClick(evt) {
+        if (evt.target.classList.contains('popup')) {
+            this.close();
+          }
     }
 
     open() {
-        this.popupSelector.classList.add('popup_opened');
+        this._popup.classList.add('popup_opened');
+        document.addEventListener('keydown', this._handleEscClose);
+        document.addEventListener('click', this._handleOverlayClick);
     }
 
     close() {
-        this.popupSelector.classList.remove('popup_opened');
+        this._popup.classList.remove('popup_opened');
+        document.removeEventListener('keydown', this._handleEscClose);
+        document.removeEventListener('click', this._handleOverlayClick);       
     }
 
     setEventListeners() {
-
+        this._popupCloseButton.addEventListener('click', () => {
+            this.close();
+        })
     }
 }
-
-function openPopup(popupElement) {
-    popupElement.classList.add('popup_opened');
-    window.addEventListener('keydown', handleEsc);
-    document.addEventListener('click', handleOverlayClick);
-  }
-  
-  function closePopup (popupElement) {
-    popupElement.classList.remove('popup_opened');
-    window.removeEventListener('keydown', handleEsc);
-    document.removeEventListener('click', handleOverlayClick);
-  }
-  
-  function handleEsc(evt) {
-    if (evt.key === 'Escape') {
-      const openedPopup = document.querySelector('.popup_opened');
-      closePopup(openedPopup);
-    }
-  }
-  
-  function handleOverlayClick(evt) {
-    if (evt.target.classList.contains('popup')) {
-      closePopup(evt.target);
-    }
-  }
