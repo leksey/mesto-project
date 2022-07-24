@@ -1,5 +1,5 @@
 export default class Card {
-  constructor (data, templateSelector, profileId, { likeCard, unLikeCard } /*, deleteCard }/*, handlePopup*/) {
+  constructor (data, templateSelector, profileId, { likeCard, unLikeCard, deleteCard }/*, handlePopup*/) {
     this._data = data;
     this._profileId = profileId;
     this._likesData = data.likes;
@@ -8,7 +8,7 @@ export default class Card {
 // // from API
     this._likeCard = likeCard;
     this._unLikeCard = unLikeCard;
-    //this._deleteCard = deleteCard;
+    this._deleteCard = deleteCard;
 
 // // from popup
 //     this._handlePopup = handlePopup;
@@ -21,23 +21,27 @@ export default class Card {
     this._deleteButton = this._template.querySelector('.card__delete-button');
   }
 
-  setLikes (data) {
-    this._likeCounter.textContent = data.length;
-  }
-
-  setLikeButtonStatus (data) {
-    data.some((element) => {
-      if(element._id === this._profileId) {
-
+  _setLikeButtonStatus () {
+      if(this._likedByMe()) {
         this._likeButton.classList.add('card__like-button_status_active');
       } else {
         this._likeButton.classList.remove('card__like-button_status_active');
       }
-    })
+  }
+
+  setLikes (data) {
+    this._likesData = data;
+    this._likeCounter.textContent = this._likesData.length;
+    console.log(this._likesData);
+    this._setLikeButtonStatus();
+  }
+
+  removeCard() {
+    this._template.remove();
   }
 
   _likedByMe() {
-    return this._likesData.some((element) => element._id === this._profileId)
+    return this._likesData.some((element) => element._id === this._profileId && this._likesData.length != 0)
   }
 
   _handleLike() {
@@ -49,7 +53,7 @@ export default class Card {
   }
 
   _checkIfMine() {
-    if (this._profileId != this._data.owner._id) {
+    if (this._profileId !== this._data.owner._id) {
       this._deleteButton.classList.add('card__delete-button_status_hidden');
     } else {
       this._deleteButton.classList.remove('card__delete-button_status_hidden');
@@ -65,14 +69,12 @@ export default class Card {
   }
 
   renderCard () {
-
     this._pic.src = this._link;
     this._pic.alt = this._name;
     this._cardCapture.textContent = this._name;
 
     this._checkIfMine();
     this.setLikes(this._likesData);
-    this.setLikeButtonStatus(this._likesData);
     this._setEventListeners();
     return this._template;
   }

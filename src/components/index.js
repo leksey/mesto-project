@@ -10,19 +10,16 @@ import FormValidator from './FormValidator';
 const api = new Api({url: apiConfig.baseUrl,
   header: apiConfig.headers
 });
-console.log(api); //TODO: remove
 
 const userInfo = new UserInfo({nameSelector: profileSelectors.name,
   aboutSelector: profileSelectors.caption,
   avatarSelector: profileSelectors.pic
 
 });
-console.log(userInfo); //TODO: remove
 
 api.getProfileData()
 .then((data) => {
   userInfo.setUserInfo(data.name, data.about, data.avatar, data._id, );
-  console.log(`Api.getProfileData() - result: ${data}`); //TODO: remove
   api.getInitialCards()
   .then((data) => {
     //data.reverse().forEach(item => addCardOnPage(renderCard(item, profileData.id))); //TODO: replace with Section method
@@ -32,7 +29,6 @@ api.getProfileData()
           api.likeCard(item._id)
           .then((data) => {
             card.setLikes(data.likes);
-            card.setLikeButtonStatus(data.likes);
           })
           .catch((err) => {
             console.log(err);
@@ -42,12 +38,20 @@ api.getProfileData()
           api.unLikeCard(item._id)
           .then((data) => {
             card.setLikes(data.likes);
-            card.setLikeButtonStatus(data.likes);
           })
           .catch((err) => {
             console.log(err);
           });
-        }//, , deleteCard
+        },
+        deleteCard: () => {
+          api.deleteCard(item._id)
+          .then(() => {
+            card.removeCard();
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
       });
       addCardOnPage(card.renderCard());
     });
