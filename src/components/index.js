@@ -1,6 +1,14 @@
 //new code
 import '../pages/index.css';
-import { apiConfig, profileSelectors, validationElements, profileForm, cardTemplate, cardsContainerSelector} from './utils/constants.js';
+import { 
+  apiConfig,
+  profileSelectors,
+  validationElements,
+  profileForm,
+  cardTemplate,
+  cardsContainerSelector,
+  profileEditButton
+} from './utils/constants.js';
 
 import Api from './Api_class.js'; //TODO: fix path
 import UserInfo from './UserInfo.js';
@@ -23,7 +31,7 @@ const userInfo = new UserInfo({nameSelector: profileSelectors.name,
 
 api.getProfileData()
 .then((data) => {
-  userInfo.setUserInfo(data.name, data.about, data.avatar, data._id, );
+  userInfo.setUserInfo(data.name, data.about, data.avatar, data._id);
   api.getInitialCards()
   .then((data) => {
     //data.reverse().forEach(item => addCardOnPage(renderCard(item, profileData.id))); //TODO: replace with Section method
@@ -75,24 +83,57 @@ api.getProfileData()
     console.log(err);
 });
 
-const formValidator = new FormValidator({
+const profilePopupValidator = new FormValidator({
   data: validationElements
 },
 profileForm);
 
-const testPopup = new PopupWithForm('.popup_profile', (inputElements) => {
-  api.editProfile()
+const profilePopup = new PopupWithForm('.popup_profile', (inputs) => {
+  profilePopup.setButtonState('Сохранение...');
+  api.editProfile(inputs.name, inputs.about)
+  .then((data) => {
+    userInfo.setUserInfo(data.name, data.about, data.avatar, data._id );
+    profilePopup.close();
+    profilePopupValidator.disableButton();
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+  .finally(function () {
+    profilePopup.setButtonState('Сохранить');
+  })
 });
-console.log(testPopup);
+profilePopup.setEventListeners();
+
+profileEditButton.addEventListener('click', () =>{
+  profilePopup.setInputValue(userInfo.getUserInfo());
+  profilePopup.open();
+  profilePopupValidator.enableValidation();
+
+});
+// editProfile(profileFormName.value, profileFormCaption.value)
+// .then((data) => {
+//   setProfileData(data);
+//   renderProfile(data);
+//   closePopup(popupProfile);
+//   disableButton(profileFormButton, validationElements.inactiveButtonClass);
+// })
+// .catch((err) => {
+//   console.log(err);
+// })
+// .finally(function () {
+//   changeSubmitButtonText(profileFormButton, 'Сохранить');
+// });
+
 
 //old code
 
 import {openPopup, closePopup} from './modal.js';
 import {renderCard, addCardOnPage} from './cards.js';
-import {enableValidation, disableButton} from './validate.js';
+//import {enableValidation, disableButton} from './validate.js';
 import {getInitialCards, getProfileData, editProfile, publishCard, editAvatar} from './api.js'
 
-const profileEditButton = document.querySelector('.profile__edit-button');
+
 const addButton = document.querySelector('.profile__add-button');
 const profilePictureButton = document.querySelector('.profile__picture-button');
 
@@ -121,11 +162,11 @@ const profileData = {};
 
 
 
-function handleEditProfilePopup () {
-  openPopup(popupProfile);
-  profileFormName.value = profileData.name;
-  profileFormCaption.value = profileData.about;
-}
+// function handleEditProfilePopup () {
+//   openPopup(popupProfile);
+//   profileFormName.value = profileData.name;
+//   profileFormCaption.value = profileData.about;
+// }
 
 function handleEditProfilePicturePopup () {
   openPopup(popupProfilePic);
@@ -135,23 +176,23 @@ function handleAddPopup () {
   openPopup(popupAdd);
 }
 
-function submitProfileForm (evt) {
-  changeSubmitButtonText(profileFormButton, 'Сохранение...');
-  evt.preventDefault();
-  editProfile(profileFormName.value, profileFormCaption.value)
-  .then((data) => {
-    setProfileData(data);
-    renderProfile(data);
-    closePopup(popupProfile);
-    disableButton(profileFormButton, validationElements.inactiveButtonClass);
-  })
-  .catch((err) => {
-    console.log(err);
-  })
-  .finally(function () {
-    changeSubmitButtonText(profileFormButton, 'Сохранить');
-  });
-}
+// function submitProfileForm (evt) {
+//   changeSubmitButtonText(profileFormButton, 'Сохранение...');
+//   evt.preventDefault();
+//   editProfile(profileFormName.value, profileFormCaption.value)
+//   .then((data) => {
+//     setProfileData(data);
+//     renderProfile(data);
+//     closePopup(popupProfile);
+//     disableButton(profileFormButton, validationElements.inactiveButtonClass);
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   })
+//   .finally(function () {
+//     changeSubmitButtonText(profileFormButton, 'Сохранить');
+//   });
+// }
 
 function addNewCard (evt) {
   changeSubmitButtonText(addFormButton, 'Сохранение...');
@@ -189,7 +230,7 @@ function submitProfilePictureForm (evt) {
   });
 }
 
-profileEditButton.addEventListener('click', handleEditProfilePopup);
+
 addButton.addEventListener('click', handleAddPopup);
 profilePictureButton.addEventListener('click', handleEditProfilePicturePopup);
 
@@ -198,11 +239,11 @@ popupCloseButtons.forEach(closeButton => {
   closeButton.addEventListener('click',() => closePopup(popup));
 });
 
-profileForm.addEventListener('submit', submitProfileForm);
+//profileForm.addEventListener('submit', submitProfileForm);
 addForm.addEventListener('submit', addNewCard);
 profilePictureForm.addEventListener('submit', submitProfilePictureForm);
 
-enableValidation(validationElements);
+//enableValidation(validationElements);
 
 // getProfileData()
 // .then((data) => {

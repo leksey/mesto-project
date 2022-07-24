@@ -22,9 +22,10 @@ const validationElements = {
 
 const popupProfile = document.querySelector('.popup_profile');
 const profileForm = popupProfile.querySelector('.form');
+const profileEditButton = document.querySelector('.profile__edit-button');
 
 const cardTemplate = '#card-template';
 
 const cardsContainerSelector = '.places';
 
-export {apiConfig, profileSelectors, validationElements, profileForm, cardTemplate, cardsContainerSelector};
+export {apiConfig, profileSelectors, validationElements, profileForm, cardTemplate, cardsContainerSelector, profileEditButton};
