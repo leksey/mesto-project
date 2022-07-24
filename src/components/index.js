@@ -7,6 +7,9 @@ import UserInfo from './UserInfo.js';
 import Card from './Card_class.js';
 import FormValidator from './FormValidator';
 import Section from './Section.js';
+import PopupWithForm from './PopupWithForm.js';
+
+
 
 const api = new Api({url: apiConfig.baseUrl,
   header: apiConfig.headers
@@ -76,6 +79,11 @@ const formValidator = new FormValidator({
   data: validationElements
 },
 profileForm);
+
+const testPopup = new PopupWithForm('.popup_profile', (inputElements) => {
+  api.editProfile()
+});
+console.log(testPopup);
 
 //old code
 
