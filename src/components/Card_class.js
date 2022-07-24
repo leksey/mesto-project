@@ -28,6 +28,7 @@ export default class Card {
   setLikeButtonStatus (data) {
     data.some((element) => {
       if(element._id === this._profileId) {
+
         this._likeButton.classList.add('card__like-button_status_active');
       } else {
         this._likeButton.classList.remove('card__like-button_status_active');
@@ -35,14 +36,16 @@ export default class Card {
     })
   }
 
+  _likedByMe() {
+    return this._likesData.some((element) => element._id === this._profileId)
+  }
+
   _handleLike() {
-    this._likesData.forEach((element) => {
-      if(element._id != this._profileId) {
-        this._likeCard();
-      } else {
+      if(this._likedByMe()) {
         this._unLikeCard();
+      } else {
+        this._likeCard();
       }
-    })
   }
 
   _checkIfMine() {
@@ -71,7 +74,6 @@ export default class Card {
     this.setLikes(this._likesData);
     this.setLikeButtonStatus(this._likesData);
     this._setEventListeners();
-
     return this._template;
   }
 }

@@ -33,7 +33,6 @@ api.getProfileData()
           .then((data) => {
             card.setLikes(data.likes);
             card.setLikeButtonStatus(data.likes);
-            console.log(data.likes);
           })
           .catch((err) => {
             console.log(err);
