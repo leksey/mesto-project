@@ -140,7 +140,7 @@ const avatarPopup = new PopupWithForm('.popup_profile-picture', (inputs) => {
     console.log(err);
   })
   .finally(function () {
-    changeSubmitButtonText(profilePictureFormButton, 'Сохранить');
+    avatarPopup.setButtonState('Сохранить');
   });
 });
 
