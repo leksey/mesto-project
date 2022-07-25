@@ -1,96 +1,103 @@
-const config = {
-  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-10',
-  headers: {
-    authorization: '9604af3d-5a7c-4d72-b14c-31174b7ac9d5',
-    'Content-Type': 'application/json'
+export default class Api {
+  constructor({url, header}){
+    this._url=url;
+    this._header=header;
+  }
+
+  getProfileData() {
+    return fetch(`${this._url}/users/me`, {
+      headers: this._header
+    })
+      .then(res => {
+        return this._handleResponse(res);
+      });
+  };
+
+  editProfile(name, about) {
+    return fetch(`${this._url}/users/me`, {
+      method: 'PATCH',
+      headers: this._header,
+      body: JSON.stringify({
+        name: name,
+        about: about
+      })
+    })
+      .then(res => {
+        return this._handleResponse(res);
+      });
+  }
+
+  editAvatar(link) {
+    return fetch(`${this._url}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._header,
+      body: JSON.stringify({
+        avatar: link
+      })
+    })
+      .then(res => {
+        return this._handleResponse(res);
+      });
+  }
+
+  // CARDS
+
+  getInitialCards() {
+    return fetch(`${this._url}/cards`, {
+      headers: this._header
+    })
+      .then(res => {
+        return this._handleResponse(res);
+      });
+  };
+
+  publishCard(name, link) {
+    return fetch(`${this._url}/cards`, {
+      method: 'POST',
+      headers: this._header,
+      body: JSON.stringify({
+        name: name,
+        link: link
+      })
+    })
+      .then(res => {
+        return this._handleResponse(res);
+      });
+  }
+
+  likeCard (id) {
+    return fetch(`${this._url}/cards/likes/${id}`, {
+      method: 'PUT',
+      headers: this._header
+    })
+      .then(res => {
+        return this._handleResponse(res);
+      });
+  }
+  unLikeCard (id) {
+    return fetch(`${this._url}/cards/likes/${id}`, {
+      method: 'DELETE',
+      headers: this._header
+    })
+      .then(res => {
+        return this._handleResponse(res);
+      });
+  }
+
+  deleteCard(id) {
+    return fetch(`${this._url}/cards/${id}`, {
+      method: 'DELETE',
+      headers: this._header
+    })
+      .then(res => {
+        return this._handleResponse(res);
+      });
+  }
+
+  _handleResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
   }
 }
-
-const getInitialCards = () => {
-  return fetch(`${config.baseUrl}/cards`, {
-    headers: config.headers
-  })
-    .then(res => {
-      return handleResponse(res);
-    });
-};
-
-const getProfileData = () => {
-  return fetch(`${config.baseUrl}/users/me`, {
-    headers: config.headers
-  })
-    .then(res => {
-      return handleResponse(res);
-    });
-};
-
-const editProfile = (name, about) => {
-  return fetch(`${config.baseUrl}/users/me`, {
-    method: 'PATCH',
-    headers: config.headers,
-    body: JSON.stringify({
-      name: name,
-      about: about
-    })
-  })
-    .then(res => {
-      return handleResponse(res);
-    });
-}
-
-
-const publishCard = (name, link) => {
-  return fetch(`${config.baseUrl}/cards`, {
-    method: 'POST',
-    headers: config.headers,
-    body: JSON.stringify({
-      name: name,
-      link: link
-    })
-  })
-    .then(res => {
-      return handleResponse(res);
-    });
-}
-
-const deleteCard = (id) => {
-  return fetch(`${config.baseUrl}/cards/${id}`, {
-    method: 'DELETE',
-    headers: config.headers
-  })
-    .then(res => {
-      return handleResponse(res);
-    });
-}
-
-const likeCard = (action, id) => {
-  return fetch(`${config.baseUrl}/cards/likes/${id}`, {
-    method: action,
-    headers: config.headers
-  })
-    .then(res => {
-      return handleResponse(res);
-    });
-}
-
-const editAvatar = (link) => {
-  return fetch(`${config.baseUrl}/users/me/avatar`, {
-    method: 'PATCH',
-    headers: config.headers,
-    body: JSON.stringify({
-      avatar: link
-    })
-  })
-    .then(res => {
-      return handleResponse(res);
-    });
-}
-
-function handleResponse (res) {
-  if (res.ok) {
-    return res.json();
-  }
-  return Promise.reject(`Ошибка: ${res.status}`);
-}
-
-export {getInitialCards, getProfileData, editProfile, publishCard, deleteCard, likeCard, editAvatar};
