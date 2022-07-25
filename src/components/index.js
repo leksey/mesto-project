@@ -6,7 +6,6 @@ import {
   profileForm,
   profilePictureForm,
   addForm,
-  addFormButton,
   cardTemplate,
   cardsContainerSelector,
   profileEditButton,
@@ -37,13 +36,14 @@ const userInfo = new UserInfo({nameSelector: profileSelectors.name,
 const popupWithImage = new PopupWithImage('.popup_pic');
 popupWithImage.setEventListeners();
 
+let cardSection;
 
 api.getProfileData()
 .then((data) => {
   userInfo.setUserInfo(data.name, data.about, data.avatar, data._id);
   api.getInitialCards()
   .then((data) => {
-    const cardSection = new Section(
+    cardSection = new Section(
       {
         items: data.reverse(),
         renderer: (item) => {
@@ -104,7 +104,6 @@ const profilePopup = new PopupWithForm('.popup_profile', (inputs) => {
   .then((data) => {
     userInfo.setUserInfo(data.name, data.about, data.avatar, data._id);
     profilePopup.close();
-    profilePopupValidator.disableButton();
   })
   .catch((err) => {
     console.log(err);
@@ -119,10 +118,9 @@ profilePopup.setEventListeners();
 profileEditButton.addEventListener('click', () =>{
   profilePopup.setInputValue(userInfo.getUserInfo());
   profilePopup.open();
-  profilePopupValidator.enableValidation();
   profilePopupValidator.disableButton();
 });
-
+profilePopupValidator.enableValidation();
 
 const avatarPopupValidator = new FormValidator({
   data: validationElements
@@ -134,7 +132,6 @@ const avatarPopup = new PopupWithForm('.popup_profile-picture', (inputs) => {
   .then((data) => {
     userInfo.setUserInfo(data.name, data.about, data.avatar, data._id);
     avatarPopup.close();
-    avatarPopupValidator.disableButton();
   })
   .catch((err) => {
     console.log(err);
@@ -148,10 +145,9 @@ avatarPopup.setEventListeners();
 
 profilePictureButton.addEventListener('click', () =>{
   avatarPopup.open();
-  avatarPopupValidator.enableValidation();
   avatarPopupValidator.disableButton();
 });
-
+avatarPopupValidator.enableValidation();
 
 const cardPopupValidator = new FormValidator({
   data: validationElements
@@ -161,51 +157,8 @@ const cardPopup = new PopupWithForm('.popup_add', (inputs) => {
   cardPopup.setButtonState('Сохранение...');
   api.publishCard(inputs.name, inputs.link)
   .then((data) => {
-    console.log(data);
-    const addedCardSection = new Section(
-      {
-        items: data,
-        renderer: (item) => {
-          const card = new Card (item, cardTemplate, userInfo.id, {
-                likeCard: () => {
-                  api.likeCard(item._id)
-                  .then((data) => {
-                    card.setLikes(data.likes);
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                  });
-                },
-                unLikeCard: () => {
-                  api.unLikeCard(item._id)
-                  .then((data) => {
-                    card.setLikes(data.likes);
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                  });
-                },
-                deleteCard: () => {
-                  api.deleteCard(item._id)
-                  .then(() => {
-                    card.removeCard();
-                    })
-                    .catch((err) => {
-                      console.log(err);
-                    });
-                },
-                handlePopup: () => {
-                  popupWithImage.open(item.name, item.link);
-                }
-              });
-              return card.renderCard();
-            }
-      },
-        cardsContainerSelector
-    );
-    addedCardSection.addItem(data);
+    cardSection.addItem(data);
     cardPopup.close();
-    cardPopupValidator.disableButton();
   })
   .catch((err) => {
     console.log(err);
@@ -219,6 +172,6 @@ cardPopup.setEventListeners();
 
 addButton.addEventListener('click', () =>{
   cardPopup.open();
-  cardPopupValidator.enableValidation();
   cardPopupValidator.disableButton();
 });
+cardPopupValidator.enableValidation();
