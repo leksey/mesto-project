@@ -30,6 +30,9 @@ const profilePictureButton = document.querySelector('.profile__picture-button');
 const popupAdd = document.querySelector('.popup_add');
 const addForm = popupAdd.querySelector('.form');
 const addFormButton = addForm.querySelector('.form__submit-button');
+const popupPic = document.querySelector('.popup_pic');
+const popupPicImg = popupPic.querySelector('.popup__img');
+const popupPicCapture = popupPic.querySelector('.popup__capture');
 
 const cardTemplate = '#card-template';
 
@@ -47,5 +50,8 @@ export {
   cardsContainerSelector,
   profileEditButton,
   addButton,
-  profilePictureButton
+  profilePictureButton,
+  popupPic,
+  popupPicImg,
+  popupPicCapture
 };

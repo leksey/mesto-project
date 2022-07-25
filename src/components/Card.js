@@ -1,17 +1,15 @@
 export default class Card {
-  constructor (data, templateSelector, profileId, { likeCard, unLikeCard, deleteCard }/*, handlePopup*/) {
+  constructor (data, templateSelector, profileId, { likeCard, unLikeCard, deleteCard, handlePopup }) {
     this._data = data;
     this._profileId = profileId;
     this._likesData = data.likes;
     this._link = data.link;
     this._name = data.name;
-// // from API
+
     this._likeCard = likeCard;
     this._unLikeCard = unLikeCard;
     this._deleteCard = deleteCard;
-
-// // from popup
-//     this._handlePopup = handlePopup;
+    this._handlePopup = handlePopup;
 
     this._template = document.querySelector(templateSelector).content.querySelector('.card').cloneNode(true);
     this._likeCounter = this._template.querySelector('.card__like-counter');
@@ -64,7 +62,7 @@ export default class Card {
       this._handleLike();
     });
     this._deleteButton.addEventListener('click', this._deleteCard);
-    // this._pic.addEventListener('click', this._handlePopup);
+    this._pic.addEventListener('click', this._handlePopup);
   }
 
   renderCard () {
